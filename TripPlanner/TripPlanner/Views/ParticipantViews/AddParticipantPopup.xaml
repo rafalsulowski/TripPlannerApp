@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TripPlanner.Views.ParticipantViews.AddParticipantPopup"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Participant"
+             Color="Transparent" 
+             CanBeDismissedByTappingOutsideOfPopup="True">
+
+    <Border 
+        Stroke="white"
+        StrokeThickness="2"
+        VerticalOptions="Center"
+        BackgroundColor="{AppThemeBinding Light=white, Dark=black}"
+        StrokeShape="RoundRectangle 20,20,20,20">
+        <VerticalStackLayout
+            Padding="10,40,10,50"
+            Spacing="20">
+            <Label
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                Text="W jaki sposób chcesz dodać użytkownika?"/>
+            <Border
+                StrokeShape="RoundRectangle 25,25,25,25"
+                BackgroundColor="{StaticResource Secondary}"
+                Stroke="{StaticResource Secondary}">
+                <VerticalStackLayout
+                    Spacing="7"
+                    Padding="10">
+                    <Label
+                        HorizontalOptions="Center"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Link z zaproszeniem"
+                        TextColor="White"/>
+                    <Grid
+                        ColumnDefinitions="*,35"
+                        HorizontalOptions="Center">
+                        <Label
+                            Grid.Column="0"
+                            VerticalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            MaximumWidthRequest="200"
+                            FontSize="16"
+                            x:Name="LabelLink"
+                            TextColor="white"/>
+                        <ImageButton
+                            Grid.Column="1"
+                            HeightRequest="20"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=CopyToClipboardCommand}"
+                            Source="copy_dt.png"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border
+                StrokeShape="RoundRectangle 25,25,25,25"
+                BackgroundColor="Transparent"
+                Stroke="{StaticResource Secondary}">
+                <Button
+                    Clicked="GoToFriendList_Cliked"
+                    BackgroundColor="Transparent"
+                    Padding="10"
+                    TextColor="{StaticResource Secondary}"
+                    HorizontalOptions="Center"
+                    Text="Wyszukaj z listy znajomych"
+                    FontSize="20"
+                    FontAttributes="Bold"/>
+            </Border>
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

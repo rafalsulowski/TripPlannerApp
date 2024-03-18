@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TripPlanner.Converter"
+    xmlns:localTemplates="clr-namespace:TripPlanner.DataTemplates"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="TripPlanner.Views.ChatViews.ChatPage"
+    xmlns:controls="clr-namespace:TripPlanner.Controls.QuestionnaireControls"
+    xmlns:models="clr-namespace:TripPlanner.Models.DTO.MessageDTOs.QuestionnaireDTOs;assembly=TripPlanner.Models"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <local:QuestionnaireCheckConverter
+            x:Key="QuestionnaireCheckConverter" />
+
+        <DataTemplate x:Key="NoticeMessage">
+            <Grid
+                RowSpacing="1"
+                Margin="5,10,5,0"
+                Padding="0,0,0,5"
+                ColumnSpacing="5"
+                RowDefinitions="20,20,*"
+                ColumnDefinitions="45,*">
+                <Border
+                    VerticalOptions="Start"
+                    MaximumHeightRequest="40"
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Margin="5,0,0,0"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20,20,20,20">
+                    <Image
+                        BackgroundColor="Transparent"
+                        Source="person_circle_sec.png"
+                        WidthRequest="40"
+                        HeightRequest="40"
+                        Aspect="Fill">
+                    </Image>
+                </Border>
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    HorizontalOptions="Center"
+                    FontSize="15"
+                    TextColor="#B2C6D5"
+                    Text="{Binding Date}" />
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    FontSize="15"
+                    TextColor="#52AB98"
+                    LineBreakMode="CharacterWrap"
+                    MaxLines="2"
+                    Text="{Binding UserId}" />
+                <Border
+                    HorizontalOptions="Start"
+                    BackgroundColor="#E3E3E3"
+                    VerticalOptions="Start"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 10,10,10,10">
+                    <Label
+                        MaximumWidthRequest="250"
+                        Padding="5"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        TextColor="#52AB98"
+                        LineBreakMode="CharacterWrap"
+                        MaxLines="25"
+                        Text="{Binding Content}" />
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TextOtherMessage">
+            <Grid
+                RowSpacing="1"
+                Margin="5,10,5,0"
+                Padding="0,0,0,5"
+                ColumnSpacing="5"
+                RowDefinitions="20,20,*"
+                ColumnDefinitions="45,*">
+                <Border
+                    VerticalOptions="Start"
+                    MaximumHeightRequest="40"
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Margin="5,0,0,0"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20,20,20,20">
+                    <Image
+                        BackgroundColor="Transparent"
+                        Source="person_circle_sec.png"
+                        WidthRequest="40"
+                        HeightRequest="40"
+                        Aspect="Fill">
+                    </Image>
+                </Border>
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    HorizontalOptions="Center"
+                    FontSize="15"
+                    TextColor="#B2C6D5"
+                    Text="{Binding Date}" />
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    FontSize="15"
+                    TextColor="#52AB98"
+                    LineBreakMode="CharacterWrap"
+                    MaxLines="2"
+                    Text="{Binding UserId}" />
+                <Border
+                    HorizontalOptions="Start"
+                    BackgroundColor="#E3E3E3"
+                    VerticalOptions="Start"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 10,10,10,10">
+                    <Label
+                        MaximumWidthRequest="250"
+                        Padding="5"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        TextColor="#52AB98"
+                        LineBreakMode="CharacterWrap"
+                        MaxLines="25"
+                        Text="{Binding Content}" />
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TextMyMessage">
+            <Grid
+                Margin="5,10,5,0"
+                Padding="0,0,0,5"
+                ColumnSpacing="5"
+                RowSpacing="3"
+                RowDefinitions="20,*"
+                ColumnDefinitions="45,*">
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    HorizontalOptions="Center"
+                    FontSize="15"
+                    TextColor="#B2C6D5"
+                    Text="{Binding Date}" />
+                <Border
+                    HorizontalOptions="End"
+                    BackgroundColor="#52AB98"
+                    VerticalOptions="Start"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Margin="0,0,25,0"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 10,10,10,10">
+                    <Label
+                        MaximumWidthRequest="250"
+                        Padding="5"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        LineBreakMode="CharacterWrap"
+                        MaxLines="25"
+                        Text="{Binding Content}" />
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="QuestionnaireMessage">
+            <StackLayout 
+                Orientation="Vertical"
+                Margin="10,10,10,0">
+                <VerticalStackLayout>
+                    <Label
+                        x:DataType="models:QuestionnaireDTO"
+                        Text="{Binding Date}"
+                        HorizontalOptions="Center"
+                        FontSize="15"
+                        TextColor="#B2C6D5"/>
+                    <Border
+                        Padding="10,5,10,5"
+                        Stroke="{AppThemeBinding Light=black, Dark=white}"
+                        StrokeShape="RoundRectangle 10,10,10,10">
+                        <VerticalStackLayout
+                            Spacing="5">
+                            <HorizontalStackLayout
+                                HorizontalOptions="Center"
+                                Spacing="15">
+                                <Image
+                                    WidthRequest="25"
+                                    Source="{AppThemeBinding Light=list_wt.png, Dark=list_dt.png}" />
+                                <Label
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource Secondary}"
+                                    Text="Ankieta" />
+                            </HorizontalStackLayout>
+                            <Label
+                                x:DataType="models:QuestionnaireDTO"
+                                Text="{Binding Content}"
+                                HorizontalOptions="Center"
+                                FontSize="20"
+                                HorizontalTextAlignment="Center"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource Secondary}"/>
+                            <CollectionView
+                                x:DataType="models:QuestionnaireDTO"
+                                HorizontalOptions="Center"
+                                ItemsSource="{Binding Answers}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <VerticalStackLayout
+                                            WidthRequest="300"
+                                            HorizontalOptions="Center">
+                                            <Grid
+                                                ColumnDefinitions="20,*,50,20"
+                                                ColumnSpacing="10"
+                                                HorizontalOptions="FillAndExpand">
+                                                <ImageButton
+                                                    x:DataType="models:QuestionnaireAnswerDTO"
+                                                    Clicked="Vote"
+                                                    BindingContext="{Binding .}"
+                                                    Grid.Column="0"
+                                                    HorizontalOptions="Start"
+                                                    Source="{Binding Votes,Converter={StaticResource QuestionnaireCheckConverter}}"
+                                                    WidthRequest="20">
+                                                </ImageButton>
+                                                <Button
+                                                    x:DataType="models:QuestionnaireAnswerDTO"
+                                                    Grid.Column="1"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Center"
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    BindingContext="{Binding .}"
+                                                    Clicked="Vote"
+                                                    BackgroundColor="Transparent"
+                                                    MaximumWidthRequest="240"
+                                                    TextColor="{StaticResource Secondary}"
+                                                    Text="{Binding Answer}">
+                                                </Button>
+                                                <Label
+                                                    Grid.Column="2"
+                                                    FontSize="16"
+                                                    TextColor="{StaticResource Secondary}"
+                                                    FontAttributes="Bold"
+                                                    MaximumWidthRequest="50"
+                                                    HorizontalOptions="End"
+                                                    VerticalOptions="Center">
+                                                    <Label.Text>
+                                                        <MultiBinding
+                                                            StringFormat="{}{0}/{1}">
+                                                            <Binding
+                                                                x:DataType="models:QuestionnaireAnswerDTO"
+                                                                Path="Votes.Count" />
+                                                            <Binding Source="{x:Reference ParticipantCountLabel}"
+                                                                Path="Text" />
+                                                        </MultiBinding>
+                                                    </Label.Text>
+                                                </Label>
+                                                <ImageButton
+                                                    x:DataType="models:QuestionnaireAnswerDTO"
+                                                    Clicked="ShowVoters"
+                                                    BindingContext="{Binding .}"
+                                                    Grid.Column="3"
+                                                    HorizontalOptions="End"
+                                                    Source="person_chat_sec.png"
+                                                    WidthRequest="20">
+                                                </ImageButton>
+                                            </Grid>
+                                            <ProgressBar
+                                                x:DataType="models:QuestionnaireAnswerDTO"
+                                                ProgressColor="{StaticResource Secondary}"
+                                                Progress="{Binding Share}" />
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                            <Label
+                                x:DataType="models:QuestionnaireDTO"
+                                Text="{Binding VoteForLabel}"
+                                HorizontalOptions="Center"
+                                FontSize="15"
+                                TextColor="#B2C6D5"
+                                VerticalOptions="Center">
+                            </Label>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </StackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="NullMessage">
+        </DataTemplate>
+
+        <localTemplates:MessageDataTemplateSelector
+            x:Key="MessageSelector"
+            NullMessage="{StaticResource NullMessage}"
+            NoticeMessage="{StaticResource NoticeMessage}"
+            TextOtherMessage="{StaticResource TextOtherMessage}"
+            TextMyMessage="{StaticResource TextMyMessage}"
+            QuestionnaireMessage="{StaticResource QuestionnaireMessage}" />
+    </ContentPage.Resources>
+
+    
+    <Grid
+        RowSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto"></RowDefinition>
+            <RowDefinition
+                Height="*"></RowDefinition>
+            <RowDefinition
+                Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Grid
+            Grid.Row="0"
+            RowDefinitions="Auto"
+            ColumnDefinitions="30,*,30"
+            Margin="10,5,10,0">
+            <ImageButton
+                Clicked="GoBack"
+                Grid.Column="0"
+                Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                HeightRequest="30" />
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                FontSize="18"
+                VerticalOptions="Center"
+                Text="Czat grupowy" />
+        </Grid>
+
+        <Label
+            IsVisible="False"
+            IsEnabled="False"
+            x:Name="ParticipantCountLabel">
+        </Label>
+        
+        <CollectionView
+            Scrolled="Scrolling"
+            x:Name="MessagesList"
+            VerticalOptions="End"
+            VerticalScrollBarVisibility="Never"
+            HorizontalScrollBarVisibility="Never"
+            Grid.Row="1"
+            EmptyView="Brak wiadomości"
+            ItemTemplate="{StaticResource MessageSelector}"
+            SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Vertical"
+                    ItemSpacing="0" />
+            </CollectionView.ItemsLayout>
+        </CollectionView>
+
+        <Grid
+            Grid.Row="2"
+            RowDefinitions="Auto"
+            ColumnDefinitions="40,*,40">
+            <ImageButton
+                Grid.Column="0"
+                Grid.Row="0"
+                Margin="5,0,5,15"
+                Clicked="ShowMoreChatAction"
+                VerticalOptions="End"
+                Source="{AppThemeBinding Light=settings_chat_wt.png, Dark=settings_chat_dt.png}"
+                HeightRequest="25"
+                WidthRequest="25" />
+            <Border
+                Margin="0,0,0,5"
+                BackgroundColor="#E3E3E3"
+                Grid.Column="1"
+                Grid.Row="0"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <Editor
+                        x:Name="Message"
+                        Keyboard="Chat"
+                        MinimumHeightRequest="35"
+                        MaximumHeightRequest="250"
+                        AutoSize="TextChanges"
+                        TextColor="#52AB98"
+                        FontAttributes="Bold"
+                        BackgroundColor="{StaticResource Gray100}"
+                        FontSize="20"
+                        VerticalOptions="FillAndExpand"
+                        VerticalTextAlignment="Center" />
+                </StackLayout>
+            </Border>
+            <ImageButton
+                Grid.Column="2"
+                Grid.Row="0"
+                Margin="5,0,5,15"
+                VerticalOptions="End"
+                Clicked="SendTextMessage"
+                Source="{AppThemeBinding Light=send_wt.png, Dark=send_dt.png}"
+                HeightRequest="30"
+                WidthRequest="30" />
+        </Grid>
+    </Grid>
+</ContentPage>

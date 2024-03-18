@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TripPlanner.Views.ShareViews.BillPage"
+             xmlns:local="clr-namespace:TripPlanner.Converter"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Shares"
+             xmlns:model="clr-namespace:TripPlanner.Models.DTO.TourDTOs;assembly=TripPlanner.Models"
+             xmlns:model2="clr-namespace:TripPlanner.Models.DTO.BillDTOs;assembly=TripPlanner.Models"
+             x:DataType="viewmodel:BillViewModel"
+             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <local:SetDecimalPrecision2Converter
+            x:Key="DecimalPrecision" />
+        <local:ToPolishMonthConverter
+            x:Key="ToPolishMonthConverter" />
+    </ContentPage.Resources>
+
+
+    <ScrollView>
+        <StackLayout
+            Orientation="Vertical"
+            Spacing="10">
+            <Grid
+                RowDefinitions="Auto"
+                ColumnDefinitions="30,*,30"
+                Margin="10,5,10,0">
+                <ImageButton
+                    Command="{Binding GoBackCommand}"
+                    Grid.Column="0"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    HeightRequest="30">
+                </ImageButton>
+                <Label
+                    Grid.Column="1"
+                    Text="Rachunek"
+                    HorizontalOptions="Center"
+                    FontSize="18"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <Label
+                Margin="0,40,0,0"
+                Text="{Binding Bill.Name}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                HorizontalOptions="Center"
+                FontSize="20"
+                FontAttributes="Bold" />
+
+            <HorizontalStackLayout
+                Spacing="10"
+                HorizontalOptions="Center">
+                <Image
+                    VerticalOptions="Center"
+                    Source="money_coin_sec.png"
+                    WidthRequest="25"
+                    HeightRequest="25" />
+                <Label
+                    Text="{Binding Bill.Value, Converter={StaticResource DecimalPrecision}, StringFormat='{0}zł'}"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    HorizontalOptions="Center"
+                    FontSize="20"
+                    FontAttributes="Bold">
+                </Label>
+            </HorizontalStackLayout>
+
+            <Label
+                TextColor="#939393"
+                HorizontalOptions="Center"
+                FontSize="16">
+                <Label.Text>
+                    <MultiBinding
+                        StringFormat="{}Rachunek dodany: {0}">
+                        <Binding
+                            Path="Bill.CreatedDate" Converter="{StaticResource ToPolishMonthConverter}" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+            
+            <Label
+                Text="{Binding Bill.CreatorName}"
+                TextColor="#939393"
+                HorizontalOptions="Center"
+                FontSize="16">
+            </Label>
+
+            <HorizontalStackLayout
+                Margin="0,10,0,0"
+                Spacing="10" 
+                HorizontalOptions="Center">
+                <Image
+                    Source="person_circle_sec.png"
+                    WidthRequest="25"
+                    HeightRequest="25" />
+                <Label
+                    FontAttributes="Bold"
+                    Text="{Binding Bill.PayerName}"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    FontSize="18">
+                </Label>
+            </HorizontalStackLayout>
+
+            <Label
+                Margin="20,10,0,0"
+                FontAttributes="Bold"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                FontSize="18">
+                <Label.Text>
+                    <MultiBinding
+                        StringFormat="{}Podział: {0}">
+                        <Binding
+                            Path="DivisionName" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+
+            <CollectionView
+                EmptyView="Brak członków rachunku do wyświetlenia"
+                Margin="20,0,20,0"
+                ItemsSource="{Binding Bill.Contributors}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        ItemSpacing="10"
+                        Orientation="Vertical"></LinearItemsLayout>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate
+                        x:DataType="model2:ExtendBillContributorDTO">
+                        <Grid
+                            ColumnSpacing="10"
+                            ColumnDefinitions="25, *, Auto">
+                            <Image
+                                Grid.Column="0"
+                                HeightRequest="25"
+                                WidthRequest="25"
+                                Source="person_circle_sec.png">
+                            </Image>
+                            <Label
+                                FontAttributes="Bold"
+                                Grid.Column="1"
+                                VerticalOptions="Center"
+                                Text="{Binding Name}">
+                            </Label>
+                            <Label
+                                MaximumWidthRequest="140"
+                                VerticalOptions="Center"
+                                Grid.Column="2"
+                                HorizontalOptions="Start"
+                                Text="{Binding Due, Converter={StaticResource DecimalPrecision}, StringFormat='{0}zł'}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <HorizontalStackLayout
+                Margin="0,40,0,0"
+                Spacing="10"
+                HorizontalOptions="Center">
+                <Image
+                    Source="image_sec.png"
+                    WidthRequest="25"
+                    HeightRequest="25" />
+                <Label
+                    FontAttributes="Bold"
+                    Text="Zobacz zdjęcie"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    FontSize="16">
+                </Label>
+            </HorizontalStackLayout>
+
+            <Label
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                MaximumWidthRequest="300"
+                Text="{Binding Bill.Description}"
+                TextColor="#939393"
+                FontSize="16">
+            </Label>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

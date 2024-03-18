@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.ScheduleViews.ScheduleCalendarPage"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Schedule"
+            x:DataType="viewmodel:ScheduleCalendarViewModel"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False">
+
+    <StackLayout
+        Orientation="Vertical"
+        Spacing="10">
+        <Grid
+            RowDefinitions="Auto"
+            ColumnDefinitions="30,*,30"
+            Margin="10,5,10,0">
+            <ImageButton
+                Grid.Column="0"
+                Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                Command="{Binding GoBackCommand}"
+                HeightRequest="30" />
+
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                FontSize="18"
+                Text="Harmonogram"
+                VerticalOptions="Center" />
+        </Grid>
+                
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TripPlanner.Views.TourViews.TourPage"
+             xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Tour"
+             x:DataType="viewmodel:TourViewModel"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="10">
+            <Grid
+                RowDefinitions="Auto"
+                ColumnDefinitions="30,*,30"
+                Margin="10,5,10,0">
+                <ImageButton
+                    Grid.Column="0"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    Command="{Binding GoBackCommand}"
+                    HeightRequest="30"/>
+
+                <Label
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    FontSize="18"
+                    VerticalOptions="Center"
+                    Text="{Binding Tour.Title}" />
+            </Grid>
+
+
+            <Grid
+                Margin="10,0,10,0"
+                RowSpacing="10"
+                RowDefinitions="130,130,130,130"
+                ColumnSpacing="10"
+                ColumnDefinitions="*,*">
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Stroke="{AppThemeBinding Light=#2B6777, Dark=White}"
+                    StrokeShape="RoundRectangle 15,15,15,15"
+                    BackgroundColor="#52AB98">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TourViewModel}}, Path=GoChatCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        Spacing="5">
+                        <Image
+                            Source="chat_dt.png"
+                            HeightRequest="30"/>
+                        <Label
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Text="czat grupowy"
+                            TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Stroke="{AppThemeBinding Light=#2B6777, Dark=White}"
+                    StrokeShape="RoundRectangle 15,15,15,15"
+                    BackgroundColor="#52AB98">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TourViewModel}}, Path=GoSharesCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        Spacing="5">
+                        <Image
+                            Source="cash_dt.png"
+                            HeightRequest="30" />
+                        <Label
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Text="Rachunki"
+                            TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Stroke="{AppThemeBinding Light=#2B6777, Dark=White}"
+                    StrokeShape="RoundRectangle 15,15,15,15"
+                    BackgroundColor="#52AB98">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TourViewModel}}, Path=GoParticipantsCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        Spacing="5">
+                        <Image
+                            Source="people_dt.png"
+                            HeightRequest="30" />
+                        <Label
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Text="Uczestnicy"
+                            TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Stroke="{AppThemeBinding Light=#2B6777, Dark=White}"
+                    StrokeShape="RoundRectangle 15,15,15,15"
+                    BackgroundColor="#52AB98">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TourViewModel}}, Path=GoScheduleCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        Spacing="5">
+                        <Image
+                            Source="calendar_dt.png"
+                            HeightRequest="30" />
+                        <Label
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Text="Harmonogram"
+                            TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+
+
+                <Border
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Stroke="{AppThemeBinding Light=#2B6777, Dark=White}"
+                    StrokeShape="RoundRectangle 15,15,15,15"
+                    BackgroundColor="#52AB98">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TourViewModel}}, Path=GoWeatherCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        Spacing="5">
+                        <Image
+                            Source="cloud_sun_dt.png"
+                            HeightRequest="30" />
+                        <Label
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Text="Pogoda"
+                            TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Stroke="{AppThemeBinding Light=#2B6777, Dark=White}"
+                    StrokeShape="RoundRectangle 15,15,15,15"
+                    BackgroundColor="#52AB98">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TourViewModel}}, Path=GoCheckListCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        Spacing="5">
+                        <Image
+                            Source="checklist_dt.png"
+                            HeightRequest="30" />
+                        <Label
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Text="Checklisty"
+                            TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Stroke="{AppThemeBinding Light=#2B6777, Dark=White}"
+                    StrokeShape="RoundRectangle 15,15,15,15"
+                    BackgroundColor="#52AB98">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TourViewModel}}, Path=GoLocationsMapsCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        Spacing="5">
+                        <Image
+                            Source="checklist_dt.png"
+                            HeightRequest="30" />
+                        <Label
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            Text="Mapa"
+                            TextColor="White" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

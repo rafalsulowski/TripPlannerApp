@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.StartViews.RegisterPage"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.User"
+            xmlns:model="clr-namespace:TripPlanner.Models.DTO.BillDTOs;assembly=TripPlanner.Models"
+            x:DataType="viewmodel:RegisterViewModel"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="30">
+            <Grid
+                RowDefinitions="Auto"
+                ColumnDefinitions="30,*,30"
+                Margin="10,5,10,0">
+                <ImageButton
+                    Command="{Binding GoBackCommand}"
+                    Grid.Column="0"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    HeightRequest="30">
+                </ImageButton>
+                <Label
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    FontSize="18"
+                    Text="Rejestracja"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <ImageButton
+                Command="{Binding}"
+                HorizontalOptions="Center"
+                Source="{Binding UserImage}"
+                WidthRequest="100"
+                HeightRequest="100">
+            </ImageButton>
+
+            <Label
+                Text="{Binding AAA}">
+                
+            </Label>
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <Editor
+                        Keyboard="Chat"
+                        MaxLength="300"
+                        MinimumHeightRequest="35"
+                        MaximumHeightRequest="200"
+                        WidthRequest="250"
+                        AutoSize="TextChanges"
+                        TextColor="#939393"
+                        FontAttributes="Bold"
+                        Text="{Binding Email}"
+                        FontSize="16"
+                        Placeholder="E-mail"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center" />
+                </StackLayout>
+            </Border>
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <Editor
+                        Keyboard="Chat"
+                        MaxLength="300"
+                        MinimumHeightRequest="35"
+                        MaximumHeightRequest="200"
+                        WidthRequest="250"
+                        AutoSize="TextChanges"
+                        TextColor="#939393"
+                        FontAttributes="Bold"
+                        Text="{Binding FullName}"
+                        FontSize="16"
+                        Placeholder="Imię i nazwisko"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center" />
+                </StackLayout>
+            </Border>
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <Editor
+                        Keyboard="Numeric"
+                        MaxLength="300"
+                        MinimumHeightRequest="35"
+                        MaximumHeightRequest="200"
+                        WidthRequest="250"
+                        AutoSize="TextChanges"
+                        TextColor="#939393"
+                        FontAttributes="Bold"
+                        Text="{Binding Phone}"
+                        FontSize="16"
+                        Placeholder="Telefon"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center" />
+                </StackLayout>
+            </Border>
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <Entry
+                        IsPassword="True"
+                        Keyboard="Chat"
+                        MaxLength="300"
+                        MinimumHeightRequest="35"
+                        MaximumHeightRequest="200"
+                        WidthRequest="250"
+                        TextColor="#939393"
+                        FontAttributes="Bold"
+                        Text="{Binding Password}"
+                        FontSize="16"
+                        Placeholder="Podaj hasło"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center" />
+                </StackLayout>
+            </Border>
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <Entry
+                        IsPassword="True"
+                        Keyboard="Chat"
+                        MaxLength="300"
+                        MinimumHeightRequest="35"
+                        MaximumHeightRequest="200"
+                        WidthRequest="250"
+                        TextColor="#939393"
+                        FontAttributes="Bold"
+                        Text="{Binding Password2}"
+                        FontSize="16"
+                        Placeholder="Powtórz hasło"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center" />
+                </StackLayout>
+            </Border>
+
+
+            <Button
+                Command="{Binding SubmitCommand}"
+                WidthRequest="150"
+                FontSize="20"
+                TextColor="White"
+                BackgroundColor="{StaticResource Primary}"
+                CornerRadius="20"
+                HorizontalOptions="Center"
+                Text="Zarejestruj">
+            </Button>
+
+
+            <Label
+                TextDecorations="Underline"
+                WidthRequest="200"
+                FontSize="17"
+                HorizontalTextAlignment="Center"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                HorizontalOptions="Center"
+                Text="Masz konto?">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RegisterViewModel}}, Path=GoLoginCommand}">
+                    </TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+
+
+            <Label
+                Margin="0,0,0,10"
+                WidthRequest="350"
+                FontSize="16"
+                FontAttributes="Bold"
+                TextColor="#939393"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Rejestrując się do “TripPlanner” akceptujesz politykę prywatności i zasady serwisu">
+            </Label>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

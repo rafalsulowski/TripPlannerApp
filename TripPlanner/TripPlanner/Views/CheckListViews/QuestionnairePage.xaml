@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.CheckListViews.QuestionnairePage"
+            xmlns:controls="clr-namespace:TripPlanner.Controls.QuestionnaireControls"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.CheckList"
+            x:DataType="viewmodel:QuestionnaireStandAloneViewModel"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="10">
+        <Grid
+            RowDefinitions="Auto"
+            ColumnDefinitions="30,*,30"
+            Margin="10,5,10,0">
+            <ImageButton
+                Command="{Binding GoBackCommand}"
+                Grid.Column="0"
+                Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                HeightRequest="30">
+            </ImageButton>
+            <Label
+                Grid.Column="1"
+                Text="Checklisty i ankiety"
+                HorizontalOptions="Center"
+                FontSize="18"
+                VerticalOptions="Center" />
+        </Grid>
+
+        <Border
+            Margin="10,0,10,0"
+            HorizontalOptions="FillAndExpand"
+            BackgroundColor="{StaticResource Secondary}"
+            StrokeShape="RoundRectangle 20,20,20,20">
+            <VerticalStackLayout>
+                <Grid
+                    Margin="0,10,0,10"
+                    ColumnDefinitions="*,*,*">
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Spacing="5">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:QuestionnaireStandAloneViewModel}}, Path=DeleteCommand}">
+                            </TapGestureRecognizer>
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Image
+                            VerticalOptions="Center"
+                            Source="trash_dt.png"
+                            HeightRequest="25"
+                            WidthRequest="25">
+                        </Image>
+                        <Label
+                            TextColor="White"
+                            Text="Usuń ankietę"
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center">
+                        </Label>
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+        <Label
+            Margin="10,50,10,0"
+            HorizontalOptions="Center"
+            FontSize="15"
+            TextColor="#B2C6D5"
+            Text="{Binding QuestionnaireDto.Date}"/>
+        <Border
+            Margin="10,0,10,0"
+            Padding="10,5,10,5"
+            Stroke="{AppThemeBinding Light=black, Dark=white}"
+            StrokeShape="RoundRectangle 10,10,10,10">
+            <VerticalStackLayout
+                Spacing="5">
+                <HorizontalStackLayout
+                    HorizontalOptions="Center"
+                    Spacing="15">
+                    <Image
+                        WidthRequest="25"
+                        Source="{AppThemeBinding Light=list_wt.png, Dark=list_dt.png}" />
+                    <Label
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Secondary}"
+                        Text="Ankieta" />
+                </HorizontalStackLayout>
+                <Label
+                    HorizontalOptions="Center"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource Secondary}"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding QuestionnaireDto.Content}" />
+                <CollectionView
+                    ItemsSource="{Binding Answers}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="controls:AnswerGDTO">
+                            <VerticalStackLayout
+                                WidthRequest="300"
+                                HorizontalOptions="Center">
+                                <Grid
+                                    ColumnDefinitions="20,*,20"
+                                    ColumnSpacing="10"
+                                    HorizontalOptions="FillAndExpand">
+                                    <Image
+                                        Grid.Column="0"
+                                        HorizontalOptions="Start"
+                                        Source="{Binding AccurateIcon}"
+                                        WidthRequest="20">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:QuestionnaireStandAloneViewModel}}, Path=VoteCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Label
+                                        Grid.Column="1"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center"
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        MaximumWidthRequest="240"
+                                        TextColor="{StaticResource Secondary}"
+                                        Text="{Binding Answer}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:QuestionnaireStandAloneViewModel}}, Path=VoteCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Image
+                                        Grid.Column="2"
+                                        HorizontalOptions="End"
+                                        Source="{AppThemeBinding Light=person_chat_wt.png, Dark=person_chat_dt.png}"
+                                        WidthRequest="20">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:QuestionnaireStandAloneViewModel}}, Path=ShowVotersCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                                <ProgressBar
+                                    ProgressColor="{StaticResource Secondary}"
+                                    Progress="{Binding PercentageShare}" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Label
+                    Text="{Binding VoteForLabel}"
+                    HorizontalOptions="Center"
+                    FontSize="15"
+                    TextColor="#B2C6D5"
+                    VerticalOptions="Center">
+                </Label>
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

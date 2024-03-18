@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="TripPlanner.Views.TourViews.CreateTour"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Tour"
+    x:DataType="viewmodel:CreateTourViewModel"
+    Shell.NavBarIsVisible="False"
+    x:Name="this"
+    xmlns:ext="clr-namespace:TripPlanner.Extension">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior
+            Command="{Binding GoBackCommand}">
+        </BackButtonBehavior>
+    </Shell.BackButtonBehavior>
+    
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="10">
+            <Grid
+                HeightRequest="30"
+                ColumnDefinitions="30,*,30"
+                Margin="10,5,10,0">
+                <ImageButton
+                    Grid.Column="0"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    WidthRequest="30"
+                    Command="{Binding GoBackCommand}" />
+
+                <Label
+                    Grid.Column="1"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontAttributes="Bold"
+                    Text="Tworzenie wyjazdu" />
+            </Grid>
+
+            <Grid
+                RowSpacing="20"
+                ColumnSpacing="20"
+                HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ext:OnOrientation>
+                        <ext:OnOrientation.Default>
+                            <ColumnDefinitionCollection>
+                                <ColumnDefinition
+                                    Width="250" />
+                                <ColumnDefinition
+                                    Width="0" />
+                            </ColumnDefinitionCollection>
+                        </ext:OnOrientation.Default>
+                        <ext:OnOrientation.Landscape>
+                            <ColumnDefinitionCollection>
+                                <ColumnDefinition
+                                    Width="250" />
+                                <ColumnDefinition
+                                    Width="250" />
+                            </ColumnDefinitionCollection>
+                        </ext:OnOrientation.Landscape>
+                    </ext:OnOrientation>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <ext:OnOrientation>
+                        <ext:OnOrientation.Default>
+                            <RowDefinitionCollection>
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                            </RowDefinitionCollection>
+                        </ext:OnOrientation.Default>
+                        <ext:OnOrientation.Landscape>
+                            <RowDefinitionCollection>
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                            </RowDefinitionCollection>
+                        </ext:OnOrientation.Landscape>
+                    </ext:OnOrientation>
+                </Grid.RowDefinitions>
+
+                <VerticalStackLayout
+                    VerticalOptions="Center"
+                    Grid.Column="{ext:OnOrientation Default=0, Portrait=0, Landscape=0}"
+                    Grid.Row="{ext:OnOrientation Default=0, Portrait=0, Landscape=0}"
+                    Spacing="5"
+                    HorizontalOptions="Center">
+                    <Label
+                        HorizontalOptions="Center"
+                        TextType="Html"
+                        FontSize="18">
+                        <![CDATA[ Wybierz termin wyjazdu<span style="color:red;">*</span>]]>
+                    </Label>
+                    <HorizontalStackLayout
+                        Spacing="15"
+                        HorizontalOptions="Center">
+                        <Border
+                            BackgroundColor="{StaticResource Gray100}"
+                            StrokeShape="RoundRectangle 10,10,10,10">
+                            <DatePicker
+                                Margin="10,0,10,0"
+                                TextColor="#52AB98"
+                                FontAttributes="Bold"
+                                FontSize="17"
+                                Format="dd/MM/yyyy"
+                                Date="{Binding StartDate}"
+                                MinimumDate="01/01/2023" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    VerticalOptions="Center"
+                    Grid.Column="{ext:OnOrientation Default=0, Portrait=0, Landscape=1}"
+                    Grid.Row="{ext:OnOrientation Default=1, Portrait=1, Landscape=0}"
+                    Spacing="5"
+                    HorizontalOptions="Center">
+                    <Label
+                        HorizontalOptions="Center"
+                        TextType="Html"
+                        FontSize="18">
+                        <![CDATA[ Wybierz termin powrotu<span style="color:red;">*</span>]]>
+                    </Label>
+                    <HorizontalStackLayout
+                        Spacing="15"
+                        HorizontalOptions="Center">
+                        <Border
+                            BackgroundColor="{StaticResource Gray100}"
+                            StrokeShape="RoundRectangle 10,10,10,10">
+                            <DatePicker
+                                Margin="10,0,10,0"
+                                TextColor="#52AB98"
+                                FontAttributes="Bold"
+                                FontSize="17"
+                                Format="dd/MM/yyyy"
+                                Date="{Binding StopDate}"
+                                MinimumDate="01/01/2023" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <HorizontalStackLayout
+                    VerticalOptions="Center"
+                    Grid.Column="{ext:OnOrientation Default=0, Portrait=0, Landscape=0}"
+                    Grid.Row="{ext:OnOrientation Default=2, Portrait=2, Landscape=3}"
+                    Spacing="5"
+                    HorizontalOptions="Center">
+                    <Label
+                        VerticalTextAlignment="Center"
+                        HorizontalOptions="Center"
+                        TextType="Html"
+                        FontSize="18">
+                        <![CDATA[ Liczba uczestników<span style="color:red;">*</span>]]>
+                    </Label>
+                    <Border
+                        Padding="3,0,3,0"
+                        BackgroundColor="{StaticResource Gray100}"
+                        StrokeShape="RoundRectangle 10,10,10,10">
+                        <Entry
+                            MaxLength="3"
+                            MinimumWidthRequest="43"
+                            Keyboard="Numeric"
+                            TextColor="#52AB98"
+                            FontAttributes="Bold"
+                            Text="{Binding ParticipantMax}"
+                            FontSize="17"
+                            VerticalTextAlignment="Center"
+                            HorizontalTextAlignment="Center" />
+                    </Border>
+                </HorizontalStackLayout>
+
+                <VerticalStackLayout
+                    VerticalOptions="Center"
+                    Grid.Column="{ext:OnOrientation Default=0, Portrait=0, Landscape=0}"
+                    Grid.Row="{ext:OnOrientation Default=3, Portrait=3, Landscape=1}"
+                    Spacing="5">
+
+                    <Label
+                        HorizontalOptions="Center"
+                        TextType="Html"
+                        FontSize="18">
+                        <![CDATA[ Docelowy kraj<span style="color:red;">*</span>]]>
+                    </Label>
+                    <Border
+                        BackgroundColor="{StaticResource Gray100}"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 10,10,10,10">
+                        <ScrollView
+                            Orientation="Vertical"
+                            MaximumWidthRequest="250">
+                            <Editor
+                                MaxLength="100"
+                                Keyboard="Chat"
+                                AutoSize="TextChanges"
+                                TextColor="#52AB98"
+                                FontAttributes="Bold"
+                                Text="{Binding TargetCountry}"
+                                FontSize="17"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" />
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    VerticalOptions="Center"
+                    Grid.Column="{ext:OnOrientation Default=0, Portrait=0, Landscape=1}"
+                    Grid.Row="{ext:OnOrientation Default=4, Portrait=4, Landscape=1}"
+                    Spacing="5">
+                    <Label
+                        HorizontalOptions="Center"
+                        TextType="Html"
+                        FontSize="18">
+                        <![CDATA[ Docelowy miejsce<span style="color:red;">*</span>]]>
+                    </Label>
+                    <Border
+                        BackgroundColor="{StaticResource Gray100}"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 10,10,10,10">
+                        <ScrollView
+                            Orientation="Vertical"
+                            MaximumWidthRequest="250">
+                            <Editor
+                                MaxLength="100"
+                                Keyboard="Chat"
+                                AutoSize="TextChanges"
+                                TextColor="#52AB98"
+                                FontAttributes="Bold"
+                                Text="{Binding TargetRegion}"
+                                FontSize="17"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" />
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    VerticalOptions="Center"
+                    Grid.Column="{ext:OnOrientation Default=0, Portrait=0, Landscape=0}"
+                    Grid.Row="{ext:OnOrientation Default=5, Portrait=5, Landscape=2}"
+                    Spacing="5">
+
+                    <Label
+                        HorizontalOptions="Center"
+                        TextType="Html"
+                        FontSize="18">
+                        <![CDATA[ Obszar pogody<span style="color:red;">*</span>]]>
+                    </Label>
+                    <HorizontalStackLayout
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center">
+                        <CheckBox
+                            IsChecked="{Binding UseTargetAsWeatherRegion}">
+                            <CheckBox.Behaviors>
+                                <toolkit:EventToCommandBehavior
+                                    EventName="CheckedChanged"
+                                    Command="{Binding Source={x:Reference this}, Path=BindingContext.UseTargetAsWeatherRegionChangedCommand}">
+                                </toolkit:EventToCommandBehavior>
+                            </CheckBox.Behaviors>
+                        </CheckBox>
+                        <Label
+                            FontSize="15"
+                            MaximumWidthRequest="230"
+                            TextColor="#939393"
+                            VerticalOptions="Center"
+                            Text="Używaj docelowego miejsca wyjazdu jako obszaru pogody">
+                        </Label>
+                    </HorizontalStackLayout>
+                    <Border
+                        BackgroundColor="{StaticResource Gray100}"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 10,10,10,10">
+                        <ScrollView
+                            Orientation="Vertical"
+                            MaximumWidthRequest="250">
+                            <Editor
+                                MaxLength="100"
+                                Keyboard="Chat"
+                                AutoSize="TextChanges"
+                                TextColor="#52AB98"
+                                FontAttributes="Bold"
+                                Text="{Binding WeatherRegion}"
+                                FontSize="17"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" />
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    VerticalOptions="Center"
+                    Grid.Column="{ext:OnOrientation Default=0, Portrait=0, Landscape=1}"
+                    Grid.Row="{ext:OnOrientation Default=6, Portrait=6, Landscape=2}"
+                    Spacing="5">
+                    <Label
+                        HorizontalOptions="Center"
+                        TextType="Html"
+                        FontSize="18">
+                        <![CDATA[ Tytuł<span style="color:red;">*</span>]]>
+                    </Label>
+                    <Border
+                        BackgroundColor="{StaticResource Gray100}"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 10,10,10,10">
+                        <ScrollView
+                            Orientation="Vertical"
+                            MaximumWidthRequest="250">
+                            <Editor
+                                MaxLength="50"
+                                Keyboard="Chat"
+                                Placeholder="maks. 50 znaków"
+                                AutoSize="TextChanges"
+                                TextColor="#52AB98"
+                                FontAttributes="Bold"
+                                Text="{Binding Title}"
+                                FontSize="17"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" />
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    VerticalOptions="Center"
+                    Grid.Column="{ext:OnOrientation Default=0, Portrait=0, Landscape=1}"
+                    Grid.Row="{ext:OnOrientation Default=7, Portrait=7, Landscape=3}"
+                    Spacing="5">
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="Opis"
+                        FontSize="18">
+                    </Label>
+                    <Border
+                        BackgroundColor="{StaticResource Gray100}"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 10,10,10,10">
+                        <ScrollView
+                            Orientation="Vertical"
+                            MaximumWidthRequest="250">
+                            <Editor
+                                MaxLength="500"
+                                Keyboard="Chat"
+                                AutoSize="TextChanges"
+                                TextColor="#52AB98"
+                                FontAttributes="Bold"
+                                Text="{Binding Description}"
+                                FontSize="17"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center" />
+                        </ScrollView>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+
+
+            <Button
+                CornerRadius="20"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                TextColor="White"
+                FontAttributes="Bold"
+                FontSize="18"
+                WidthRequest="150"
+                HeightRequest="50"
+                Text="Utwórz"
+                Command="{Binding GoNextCommand}" />
+
+            <Label
+                TextColor="{StaticResource Gray400}"
+                HorizontalOptions="End"
+                Margin="0,10,20,10"
+                TextType="Html"
+                FontSize="13">
+                <![CDATA[<span style="color:red;">*</span> - pole obowiązkowe ]]>
+            </Label>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

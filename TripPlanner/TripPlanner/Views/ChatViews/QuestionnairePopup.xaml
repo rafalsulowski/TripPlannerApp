@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TripPlanner.Views.ChatViews.QuestionnairePopup"
+             xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Chat"
+             xmlns:models="clr-namespace:TripPlanner.Models.DTO.MessageDTOs.QuestionnaireDTOs;assembly=TripPlanner.Models"
+             x:DataType="viewmodel:QuestionnaireViewModel"
+             Color="Transparent"
+             CanBeDismissedByTappingOutsideOfPopup="True">
+
+    <ScrollView>
+        <AbsoluteLayout
+            MinimumHeightRequest="500"
+            MinimumWidthRequest="300">
+            <Border
+                AbsoluteLayout.LayoutFlags="WidthProportional,HeightProportional"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                Padding="20,20,20,20"
+                StrokeShape="RoundRectangle 20,20,20,20"
+                BackgroundColor="{AppThemeBinding Light=white, Dark=black}">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout 
+                            HorizontalOptions="Center"
+                            Spacing="15">
+                        <Image
+                            WidthRequest="25"
+                            Source="bell_dt.png"/>
+                        <Label
+                            FontSize="22"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource Secondary}"
+                            Text="Ankieta"/>
+                    </HorizontalStackLayout>
+                    <Label HorizontalOptions="Center"
+                            FontSize="22"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource Secondary}"
+                            Text="{Binding Questionnaire.Content}"/>
+                    <CollectionView
+                        HorizontalOptions="Center"
+                        ItemsSource="{Binding Questionnaire.Answers}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:QuestionnaireAnswerDTO">
+                                <VerticalStackLayout>
+                                    <Grid ColumnDefinitions="20,*,20"
+                                            ColumnSpacing="10"
+                                            HorizontalOptions="FillAndExpand">
+                                        <Image
+                                                Grid.Column="0"
+                                                HorizontalOptions="Start"
+                                                Source="bell_wt.png"
+                                                WidthRequest="20">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:QuestionnaireViewModel}}, Path=VoteCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                        <Label
+                                                Grid.Column="1"
+                                                HorizontalOptions="Start"
+                                                VerticalOptions="Center"
+                                                FontAttributes="Bold"
+                                                FontSize="18"
+                                                WidthRequest="200"
+                                                TextColor="{StaticResource Secondary}"
+                                                Text="{Binding Answer}"/>
+                                        <Image
+                                                Grid.Column="2"
+                                                HorizontalOptions="End"
+                                                Source="{AppThemeBinding Light=person_chat_wt.png, Dark=person_chat_dt.png}"
+                                                WidthRequest="20">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:QuestionnaireViewModel}}, Path=ShowVoterCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Label
+                        HorizontalOptions="Center"
+                        FontSize="16"
+                        TextColor="#B2C6D5"
+                        VerticalOptions="Center">
+                        <Label.Text>
+                            <MultiBinding StringFormat="{}{0} '{1}'">
+                                <Binding Source="Swój głos oddałeś na "/>
+                                <Binding Source="tak"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                </VerticalStackLayout>
+            </Border>
+        </AbsoluteLayout>
+    </ScrollView>
+</toolkit:Popup>

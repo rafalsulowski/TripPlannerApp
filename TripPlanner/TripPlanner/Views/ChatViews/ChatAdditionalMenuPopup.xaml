@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TripPlanner.Views.ChatViews.ChatAdditionalMenuPopup"
+             Color="Transparent"
+             CanBeDismissedByTappingOutsideOfPopup="True">
+    <Border
+        Padding="40,60,40,60"
+        StrokeShape="RoundRectangle 20,20,20,20"
+        BackgroundColor="{AppThemeBinding Light=white, Dark=black}">
+        <VerticalStackLayout>
+            <HorizontalStackLayout 
+                Spacing="10">
+                <VerticalStackLayout 
+                    Spacing="5">
+                    <ImageButton
+                        Clicked="AddQuestionnaire"
+                        Source="{AppThemeBinding Light=list_stars_wt.png, Dark=list_stars_dt.png}"
+                        HeightRequest="75"
+                        WidthRequest="75"/>
+                    <Label
+                        FontAttributes="Bold"
+                        TextColor="{AppThemeBinding Light=black, Dark=white}"
+                        Text="Ankiety"
+                        HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout
+                    Spacing="5">
+                    <ImageButton
+                        Clicked="ShowPeopleOnChat"
+                        Source="{AppThemeBinding Light=person_chat_wt.png, Dark=person_chat_dt.png}"
+                        HeightRequest="75"
+                        WidthRequest="75"/>
+                    <Label
+                        FontAttributes="Bold"
+                        TextColor="{AppThemeBinding Light=black, Dark=white}"
+                        Text="Lista osób na czacie"
+                        WidthRequest="75"
+                        HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

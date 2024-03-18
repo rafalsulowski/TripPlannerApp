@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            x:Class="TripPlanner.Views.ShareViews.DivisionTypePage"
+            xmlns:localTemplates="clr-namespace:TripPlanner.DataTemplates"
+            xmlns:local="clr-namespace:TripPlanner.Converter"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Shares"
+            xmlns:model="clr-namespace:TripPlanner.Models.DTO.BillDTOs;assembly=TripPlanner.Models"
+            xmlns:model2="clr-namespace:TripPlanner.Models.DTO.BillDTOs;assembly=TripPlanner.Models"
+            x:DataType="viewmodel:DivisionTypeViewModel"
+            x:Name="this"
+            Shell.TabBarIsVisible="False"
+            Shell.NavBarIsVisible="False">
+
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="Equally"
+            x:DataType="viewmodel:SplitBillView">
+            <Grid
+                RowSpacing="10"
+                Margin="10,0,10,10"
+                RowDefinitions="Auto, Auto, *, Auto">
+                <Label
+                    Grid.Row="0"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="{Binding Title}" />
+
+                <Label
+                    Grid.Row="1"
+                    MaximumWidthRequest="250"
+                    HorizontalTextAlignment="Center"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="{Binding Description}" />
+
+
+                <CollectionView
+                    Margin="0,10,0,10"
+                    Grid.Row="2"
+                    HorizontalOptions="Center"
+                    ItemsSource="{Binding Contributors}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model:ExtendBillContributorDTO">
+                            <Grid
+                                ColumnSpacing="10"
+                                ColumnDefinitions="25, *, Auto, 50">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DivisionTypeViewModel}}, Path=CheckCommand}"
+                                        CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </Grid.GestureRecognizers>
+                                <Image
+                                    Grid.Column="0"
+                                    HeightRequest="25"
+                                    WidthRequest="25"
+                                    Source="person_circle_sec.png">
+                                </Image>
+                                <Label
+                                    FontAttributes="Bold"
+                                    Grid.Column="1"
+                                    VerticalOptions="Center"
+                                    Text="{Binding Name}">
+                                </Label>
+                                <Label
+                                    MaximumWidthRequest="140"
+                                    VerticalOptions="Center"
+                                    Grid.Column="2"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding Due, Converter={StaticResource DecimalPrecision}, StringFormat='{0}zł'}" />
+                                <CheckBox
+                                    VerticalOptions="Center"
+                                    IsChecked="{Binding IsChecked}"
+                                    Grid.Column="3">
+                                    <CheckBox.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DivisionTypeViewModel}}, Path=CheckCommand}"
+                                            CommandParameter="{Binding .}">
+                                        </TapGestureRecognizer>
+                                    </CheckBox.GestureRecognizers>
+                                </CheckBox>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Grid
+                    Grid.Row="3"
+                    VerticalOptions="End"
+                    Margin="10,10,10,10"
+                    ColumnDefinitions="*, 90"
+                    ColumnSpacing="0">
+                    <VerticalStackLayout
+                        Spacing="5"
+                        HorizontalOptions="Center"
+                        Grid.Column="0">
+                        <Label
+                            HorizontalOptions="Center"
+                            Text="{Binding SplitFirstInfo}">
+                        </Label>
+                        <Label
+                            HorizontalOptions="Center"
+                            Text="{Binding SplitSecondInfo}">
+                        </Label>
+                    </VerticalStackLayout>
+                    <HorizontalStackLayout
+                        Grid.Column="1">
+                        <Label
+                            VerticalOptions="Center"
+                            Text="Wszyscy" />
+                        <CheckBox
+                            IsChecked="{Binding IsCheckedAll}">
+                            <CheckBox.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DivisionTypeViewModel}}, Path=CheckAllCommand}">
+                                </TapGestureRecognizer>
+                            </CheckBox.GestureRecognizers>
+                        </CheckBox>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Unequally"
+            x:DataType="viewmodel:SplitBillView">
+            <Grid
+                RowSpacing="10"
+                Margin="10,0,10,10"
+                RowDefinitions="Auto, Auto, *, Auto">
+                <Label
+                    Grid.Row="0"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="{Binding Title}" />
+
+                <Label
+                    Grid.Row="1"
+                    MaximumWidthRequest="250"
+                    HorizontalTextAlignment="Center"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="{Binding Description}" />
+
+
+                <CollectionView
+                    Margin="0,10,0,10"
+                    Grid.Row="2"
+                    HorizontalOptions="Center"
+                    ItemsSource="{Binding Contributors}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model:ExtendBillContributorDTO">
+                            <Grid
+                                ColumnSpacing="10"
+                                ColumnDefinitions="25, *, Auto,15">
+                                <Image
+                                    Grid.Column="0"
+                                    HeightRequest="25"
+                                    WidthRequest="25"
+                                    Source="person_circle_sec.png">
+                                </Image>
+                                <Label
+                                    FontAttributes="Bold"
+                                    Grid.Column="1"
+                                    VerticalOptions="Center"
+                                    Text="{Binding Name}">
+                                </Label>
+                                <Editor
+                                    MaximumWidthRequest="100"
+                                    Keyboard="Numeric"
+                                    MaxLength="9"
+                                    VerticalOptions="Center"
+                                    Grid.Column="2"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding Due}"
+                                    Placeholder="0.00zł">
+                                    <Editor.Behaviors>
+                                        <toolkit:EventToCommandBehavior
+                                            EventName="TextChanged"
+                                            Command="{Binding Source={x:Reference this}, Path=BindingContext.UnEquallyDueChangedCommand}"
+                                            CommandParameter="{Binding .}">
+                                        </toolkit:EventToCommandBehavior>
+                                    </Editor.Behaviors>
+                                </Editor>
+                                <Label
+                                    FontAttributes="Bold"
+                                    Grid.Column="3"
+                                    VerticalOptions="Center"
+                                    Text="zł">
+                                </Label>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+                <VerticalStackLayout
+                    Margin="10"
+                    Grid.Row="3"
+                    Spacing="5"
+                    HorizontalOptions="Center">
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="{Binding SplitFirstInfo}">
+                    </Label>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="{Binding SplitSecondInfo}">
+                    </Label>
+                </VerticalStackLayout>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ByPercentages"
+            x:DataType="viewmodel:SplitBillView">
+            <Grid
+                RowSpacing="10"
+                Margin="10,0,10,10"
+                RowDefinitions="Auto, Auto, *, Auto">
+                <Label
+                    Grid.Row="0"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="{Binding Title}" />
+
+                <Label
+                    Grid.Row="1"
+                    MaximumWidthRequest="250"
+                    HorizontalTextAlignment="Center"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="{Binding Description}" />
+
+
+                <CollectionView
+                    Margin="0,10,0,10"
+                    Grid.Row="2"
+                    HorizontalOptions="Center"
+                    ItemsSource="{Binding Contributors}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Vertical"
+                            ItemSpacing="10"></LinearItemsLayout>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model:ExtendBillContributorDTO">
+                            <Grid
+                                ColumnSpacing="10"
+                                ColumnDefinitions="25, *, Auto,15">
+                                <Image
+                                    Grid.Column="0"
+                                    HeightRequest="25"
+                                    WidthRequest="25"
+                                    Source="person_circle_sec.png">
+                                </Image>
+
+                                <VerticalStackLayout
+                                    Spacing="2"
+                                    Grid.Column="1">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        VerticalOptions="Center"
+                                        Text="{Binding Name}">
+                                    </Label>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center"
+                                        Text="{Binding Due, Converter={StaticResource DecimalPrecision}, StringFormat='{0}zł'}">
+                                    </Label>
+                                </VerticalStackLayout>
+                                <Editor
+                                    MinimumWidthRequest="40"
+                                    HorizontalTextAlignment="End"
+                                    Keyboard="Numeric"
+                                    MaxLength="2"
+                                    VerticalOptions="Center"
+                                    Grid.Column="2"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding SplitValue}"
+                                    Placeholder="0">
+                                    <Editor.Behaviors>
+                                        <toolkit:EventToCommandBehavior
+                                            EventName="TextChanged"
+                                            Command="{Binding Source={x:Reference this}, Path=BindingContext.ByPercentagesDueChangedCommand}"
+                                            CommandParameter="{Binding .}">
+                                        </toolkit:EventToCommandBehavior>
+                                    </Editor.Behaviors>
+                                </Editor>
+                                <Label
+                                    FontAttributes="Bold"
+                                    Grid.Column="3"
+                                    VerticalOptions="Center"
+                                    Text="%">
+                                </Label>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+                <VerticalStackLayout
+                    Margin="10"
+                    Grid.Row="3"
+                    Spacing="5"
+                    HorizontalOptions="Center">
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="{Binding SplitFirstInfo}">
+                    </Label>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="{Binding SplitSecondInfo}">
+                    </Label>
+                </VerticalStackLayout>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ByShares"
+            x:DataType="viewmodel:SplitBillView">
+            <Grid
+                RowSpacing="10"
+                Margin="10,0,10,10"
+                RowDefinitions="Auto, Auto, *, Auto">
+                <Label
+                    Grid.Row="0"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="{Binding Title}" />
+
+                <Label
+                    Grid.Row="1"
+                    MaximumWidthRequest="250"
+                    HorizontalTextAlignment="Center"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="{Binding Description}" />
+
+
+                <CollectionView
+                    Margin="0,10,0,10"
+                    Grid.Row="2"
+                    HorizontalOptions="Center"
+                    ItemsSource="{Binding Contributors}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Vertical"
+                            ItemSpacing="10"></LinearItemsLayout>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model:ExtendBillContributorDTO">
+                            <Grid
+                                ColumnSpacing="10"
+                                ColumnDefinitions="25, *, Auto, Auto">
+                                <Image
+                                    Grid.Column="0"
+                                    HeightRequest="25"
+                                    WidthRequest="25"
+                                    Source="person_circle_sec.png">
+                                </Image>
+                                <VerticalStackLayout
+                                    Spacing="2"
+                                    Grid.Column="1">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        VerticalOptions="Center"
+                                        Text="{Binding Name}">
+                                    </Label>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center"
+                                        Text="{Binding Due, Converter={StaticResource DecimalPrecision}, StringFormat='{0}zł'}">
+                                    </Label>
+                                </VerticalStackLayout>
+                                <Editor
+                                    HorizontalTextAlignment="End"
+                                    MaximumWidthRequest="60"
+                                    Keyboard="Numeric"
+                                    MaxLength="5"
+                                    VerticalOptions="Center"
+                                    Grid.Column="2"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding SplitValue}"
+                                    Placeholder="0">
+                                    <Editor.Behaviors>
+                                        <toolkit:EventToCommandBehavior
+                                            EventName="TextChanged"
+                                            Command="{Binding Source={x:Reference this}, Path=BindingContext.BySharesDueChangedCommand}"
+                                            CommandParameter="{Binding .}">
+                                        </toolkit:EventToCommandBehavior>
+                                    </Editor.Behaviors>
+                                </Editor>
+                                <Label
+                                    FontAttributes="Bold"
+                                    Grid.Column="3"
+                                    VerticalOptions="Center"
+                                    Text="udziałów">
+                                </Label>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+                <VerticalStackLayout
+                    Margin="10"
+                    Grid.Row="3"
+                    Spacing="5"
+                    HorizontalOptions="Center">
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="{Binding SplitFirstInfo}">
+                    </Label>
+                </VerticalStackLayout>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ByAdjustment"
+            x:DataType="viewmodel:SplitBillView">
+            <Grid
+                RowSpacing="10"
+                Margin="10,0,10,10"
+                RowDefinitions="Auto, Auto, *">
+                <Label
+                    Grid.Row="0"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="{Binding Title}" />
+
+                <Label
+                    Grid.Row="1"
+                    MaximumWidthRequest="250"
+                    HorizontalTextAlignment="Center"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="{Binding Description}" />
+
+
+                <CollectionView
+                    Margin="0,10,0,10"
+                    Grid.Row="2"
+                    HorizontalOptions="Center"
+                    ItemsSource="{Binding Contributors}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Vertical"
+                            ItemSpacing="10"></LinearItemsLayout>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model:ExtendBillContributorDTO">
+                            <Grid
+                                ColumnSpacing="10"
+                                ColumnDefinitions="25, *, 15,Auto">
+                                <Image
+                                    Grid.Column="0"
+                                    HeightRequest="25"
+                                    WidthRequest="25"
+                                    Source="person_circle_sec.png">
+                                </Image>
+                                <VerticalStackLayout
+                                    Spacing="2"
+                                    Grid.Column="1">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        VerticalOptions="Center"
+                                        Text="{Binding Name}">
+                                    </Label>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center"
+                                        Text="{Binding Due, Converter={StaticResource DecimalPrecision}, StringFormat='{0}zł'}">
+                                    </Label>
+                                </VerticalStackLayout>
+                                <Label
+                                    FontAttributes="Bold"
+                                    Grid.Column="2"
+                                    HorizontalTextAlignment="End"
+                                    VerticalOptions="Center"
+                                    Text="+">
+                                </Label>
+                                <Editor
+                                    HorizontalTextAlignment="Start"
+                                    Keyboard="Numeric"
+                                    MaxLength="3"
+                                    VerticalOptions="Center"
+                                    Grid.Column="3"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding SplitValue}"
+                                    Placeholder="0">
+                                    <Editor.Behaviors>
+                                        <toolkit:EventToCommandBehavior
+                                            EventName="TextChanged"
+                                            Command="{Binding Source={x:Reference this}, Path=BindingContext.ByAdjustmentDueChangedCommand}"
+                                            CommandParameter="{Binding .}">
+                                        </toolkit:EventToCommandBehavior>
+                                    </Editor.Behaviors>
+                                </Editor>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </DataTemplate>
+
+        <localTemplates:SplitBillDataTemplateSelector
+            x:Key="SplitBillSelector"
+            Equally      ="{StaticResource Equally      }"
+            Unequally    ="{StaticResource Unequally    }"
+            ByPercentages="{StaticResource ByPercentages}"
+            ByShares     ="{StaticResource ByShares     }"
+            ByAdjustment ="{StaticResource ByAdjustment }" />
+
+        <local:SetDecimalPrecision2Converter
+            x:Key="DecimalPrecision" />
+    </ContentPage.Resources>
+
+    <StackLayout
+        Orientation="Vertical"
+        Spacing="10">
+        <Grid
+            RowDefinitions="Auto"
+            ColumnDefinitions="30,*,30"
+            Margin="10,5,10,0">
+            <ImageButton
+                Grid.Column="0"
+                Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                Command="{Binding GoBackCommand}"
+                HeightRequest="30" />
+
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                FontSize="18"
+                VerticalOptions="Center"
+                Text="Dostosuj podział" />
+
+            <ImageButton
+                Grid.Column="2"
+                Source="check_sec.png"
+                Command="{Binding AcceptCommand}"
+                HeightRequest="30" />
+        </Grid>
+
+        <CarouselView
+            HorizontalScrollBarVisibility="Never"
+            VerticalScrollBarVisibility="Never"
+            Margin="0,30,0,0"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            CurrentItem="{Binding CurrentItem}"
+            ItemsSource="{Binding SplitBillViews}"
+            ItemTemplate="{StaticResource SplitBillSelector}"
+            Loop="False">
+        </CarouselView>
+    </StackLayout>
+</ContentPage>

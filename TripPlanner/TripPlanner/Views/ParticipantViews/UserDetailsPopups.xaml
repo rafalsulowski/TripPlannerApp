@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TripPlanner.Views.ParticipantViews.UserDetailsPopups"
+             xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Participant"
+             Color="Transparent"
+             CanBeDismissedByTappingOutsideOfPopup="True">
+    <Border
+        WidthRequest="360"
+        Stroke="{AppThemeBinding Light=#939393, Dark={StaticResource Secondary}}"
+        Padding="20,20,20,80"
+        StrokeShape="RoundRectangle 20,20,20,20"
+        BackgroundColor="{AppThemeBinding Light=white, Dark=black}">
+        <VerticalStackLayout
+            Spacing="30">
+            <Grid
+                RowDefinitions="30,*">
+                <ImageButton
+                    Grid.Row="0"
+                    HorizontalOptions="Start"
+                    HeightRequest="30"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    Clicked="GoBack" />
+                <Label
+                    Grid.Row="1"
+                    HorizontalOptions="Center"
+                    FontAttributes="Bold"
+                    x:Name="Name"
+                    FontSize="20"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"/>
+            </Grid>
+            <Image
+                WidthRequest="90"
+                HeightRequest="90"
+                HorizontalOptions="Center"
+                Source="person_circle_sec.png" />
+            <VerticalStackLayout Spacing="10">
+                <HorizontalStackLayout 
+                    Spacing="10">
+                    <Label
+                        FontSize="17"
+                        x:Name="Nickname"
+                        TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                    <Image
+                        x:Name="ChangeNicknameButton"
+                        Source="pen_sec.png"
+                        WidthRequest="20"
+                        HeightRequest="20">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=ChangeNicknameCommand}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </HorizontalStackLayout>
+                <Label
+                    FontSize="17"
+                    x:Name="Telfon"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Label
+                    FontSize="17"
+                    x:Name="Function"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Label
+                    FontSize="17"
+                    x:Name="Email"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Label
+                    FontSize="17"
+                    x:Name="City"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Label
+                    FontSize="17"
+                    x:Name="BirthDate"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Label
+                    FontSize="17"
+                    x:Name="Age"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+            </VerticalStackLayout>
+            <Button
+                Margin="0,10,0,0"
+                Padding="10,5,10,5"
+                x:Name="DeleteButton"
+                CornerRadius="20"
+                BackgroundColor="{StaticResource Secondary}"
+                TextColor="white"
+                FontSize="18"
+                FontAttributes="Bold">
+                <Button.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=DeleteParticipantFromDetailsCommand}">
+                    </TapGestureRecognizer>
+                </Button.GestureRecognizers>
+            </Button>
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

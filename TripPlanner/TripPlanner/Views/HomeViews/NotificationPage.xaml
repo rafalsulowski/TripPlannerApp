@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.HomeViews.NotificationPage"
+            xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:localTemplates="clr-namespace:TripPlanner.DataTemplates"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Home"
+            xmlns:local2="clr-namespace:TripPlanner.Converter"
+            xmlns:local="clr-namespace:TripPlanner.Models.DTO.UserDTOs;assembly=TripPlanner.Models"
+             x:DataType="viewmodel:NotificationViewModel"
+             Shell.NavBarIsVisible="False">
+
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior
+            Command="{Binding AppearingCommand}"
+            EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        
+        <local2:StringFirst50CharacterConverter
+            x:Key="StringFirst50CharacterConverter" />
+        <local2:CheckListColorTextConverter
+            x:Key="CheckListColorTextConverter" />
+
+        <local2:NotificationIconToGrayConverter
+            x:Key="NotificationIconToGrayConverter" />
+
+    </ContentPage.Resources>
+
+
+    <ScrollView>
+        <StackLayout
+            Orientation="Vertical"
+            Spacing="10">
+            <Grid
+                RowDefinitions="Auto"
+                ColumnDefinitions="30,*,30"
+                Margin="10,5,10,0">
+                <Label
+                    Grid.Column="1"
+                    Text="Powiadomienia"
+                    HorizontalOptions="Center"
+                    FontSize="18"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <CollectionView
+                EmptyView="Brak powiadomień do wyświetlenia"
+                ItemsSource="{Binding Notifications}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Vertical"
+                        ItemSpacing="10">
+                    </LinearItemsLayout>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate
+                        x:DataType="local:NotificationDTO">
+                        <Border
+                            HorizontalOptions="Center"
+                            Padding="15,5,15,10"
+                            StrokeThickness="2"
+                            StrokeShape="RoundRectangle 20,20,20,20"
+                            Stroke="{Binding IsVisited, Converter={StaticResource CheckListColorTextConverter}}">
+                            <HorizontalStackLayout
+                                HorizontalOptions="Center"
+                                Spacing="15">
+                                <HorizontalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NotificationViewModel}}, Path=GoToNotificationCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </HorizontalStackLayout.GestureRecognizers>
+                                <Image
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    HeightRequest="50"
+                                    WidthRequest="50"
+                                    Source="{Binding ., Converter={StaticResource NotificationIconToGrayConverter}}"></Image>
+                                <VerticalStackLayout
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Center"
+                                    Spacing="5">
+                                    <Label
+                                        TextColor="{Binding IsVisited, Converter={StaticResource CheckListColorTextConverter}}"
+                                        Text="{Binding Name}"
+                                        MaximumWidthRequest="250"
+                                        FontSize="18"
+                                        FontAttributes="Bold" />
+                                    <Label
+                                        TextColor="{Binding IsVisited, Converter={StaticResource CheckListColorTextConverter}}"
+                                        Text="{Binding Message, Converter={StaticResource StringFirst50CharacterConverter}}"
+                                        MaximumWidthRequest="250"
+                                        FontSize="16" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

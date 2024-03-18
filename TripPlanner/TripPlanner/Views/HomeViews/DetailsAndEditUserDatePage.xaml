@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+            xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.HomeViews.DetailsAndEditUserDatePage"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.User"
+            xmlns:model="clr-namespace:TripPlanner.Models.DTO.UserDTOs;assembly=TripPlanner.Models"
+            x:DataType="viewmodel:ProfileDetailsViewModel"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False">
+
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="30">
+            <Grid
+                RowDefinitions="Auto"
+                ColumnDefinitions="30,*,30"
+                Margin="10,5,10,0">
+                <ImageButton
+                    Command="{Binding GoBackCommand}"
+                    Grid.Column="0"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    HeightRequest="30">
+                </ImageButton>
+                <Label
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    FontSize="18"
+                    Text="Rejestracja"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <Label
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Text="Dane użytkownika"></Label>
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <VerticalStackLayout>
+                        <Label
+                            Margin="5,10,0,0"
+                            Text="E-mial:"></Label>
+                        <HorizontalStackLayout Spacing="10">
+                            <Label
+                                Margin="5,0,0,0"
+                                MinimumHeightRequest="35"
+                                MaximumHeightRequest="200"
+                                WidthRequest="250"
+                                TextColor="#939393"
+                                FontAttributes="Bold"
+                                Text="{Binding User.Email}"
+                                FontSize="16"
+                                VerticalOptions="FillAndExpand"
+                                HorizontalTextAlignment="Start"
+                                VerticalTextAlignment="Center" />
+                            <Image
+                                VerticalOptions="Center"
+                                WidthRequest="20"
+                                Source="pen_sec.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileDetailsViewModel}}, Path=EditEmialCommand}">
+                                    </TapGestureRecognizer>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </StackLayout>
+            </Border>
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <VerticalStackLayout>
+                        <Label
+                            Margin="5,10,0,0"
+                            Text="Imię i nazwisko:"></Label>
+                        <HorizontalStackLayout
+                        Spacing="10">
+                            <Label
+                                Margin="5,0,0,0"
+                                MinimumHeightRequest="35"
+                        MaximumHeightRequest="200"
+                        WidthRequest="250"
+                        TextColor="#939393"
+                        FontAttributes="Bold"
+                        Text="{Binding User.FullName}"
+                        FontSize="16"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center" />
+                    <Image
+                        VerticalOptions="Center"
+                        WidthRequest="20"
+                        Source="pen_sec.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileDetailsViewModel}}, Path=EditNameCommand}">
+                            </TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </StackLayout>
+            </Border>
+            
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <VerticalStackLayout>
+                        <Label
+                            Margin="5,10,0,0"
+                            Text="Telefon:"></Label>
+                        <HorizontalStackLayout
+                        Spacing="10">
+                        <Label
+                            Margin="5,0,0,0"
+                            MinimumHeightRequest="35"
+                            MaximumHeightRequest="200"
+                            WidthRequest="250"
+                            TextColor="#939393"
+                            FontAttributes="Bold"
+                            Text="{Binding User.Phone}"
+                            FontSize="16"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalTextAlignment="Start"
+                            VerticalTextAlignment="Center" />
+                        <Image
+                            VerticalOptions="Center"
+                            WidthRequest="20"
+                            Source="pen_sec.png">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileDetailsViewModel}}, Path=EditPhoneCommand}">
+                                </TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </StackLayout>
+            </Border>
+            
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <VerticalStackLayout>
+                        <Label
+                            Margin="5,10,0,0"
+                            Text="Adress do korespondencji:"></Label>
+                        <HorizontalStackLayout
+                        Spacing="10">
+                            <Label
+                                Margin="5,0,0,0"
+                                MinimumHeightRequest="35"
+                        MaximumHeightRequest="200"
+                        WidthRequest="250"
+                        TextColor="#939393"
+                        FontAttributes="Bold"
+                        Text="{Binding User.FullAddress}"
+                        FontSize="16"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center" />
+                    <Image
+                        VerticalOptions="Center"
+                        WidthRequest="20"
+                        Source="pen_sec.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileDetailsViewModel}}, Path=EditAddressCommand}">
+                            </TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </StackLayout>
+            </Border>
+
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <VerticalStackLayout>
+                        <Label
+                            Margin="5,10,0,0"
+                            Text="Aktualne miasto zamieszkania:"></Label>
+                        <HorizontalStackLayout
+                            Spacing="10">
+                            <Label
+                                Margin="5,0,0,0"
+                                MinimumHeightRequest="35"
+                                MaximumHeightRequest="200"
+                                WidthRequest="250"
+                                TextColor="#939393"
+                                FontAttributes="Bold"
+                                Text="{Binding User.City}"
+                                FontSize="16"
+                                VerticalOptions="FillAndExpand"
+                                HorizontalTextAlignment="Start"
+                                VerticalTextAlignment="Center" />
+                            <Image
+                                VerticalOptions="Center"
+                                WidthRequest="20"
+                                Source="pen_sec.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileDetailsViewModel}}, Path=EditCityCommand}">
+                                    </TapGestureRecognizer>
+                                </Image.GestureRecognizers>
+                            </Image>    
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </StackLayout>
+            </Border>
+
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <StackLayout
+                    Padding="5,0,5,0">
+                    <VerticalStackLayout>
+                        <Label
+                            Margin="5,10,0,0"
+                            Text="Data urodzenia:"></Label>
+                        <HorizontalStackLayout
+                            Spacing="10">
+                            <Label
+                                Margin="5,0,0,0"
+                                MinimumHeightRequest="35"
+                                MaximumHeightRequest="200"
+                                WidthRequest="250"
+                                TextColor="#939393"
+                                FontAttributes="Bold"
+                                Text="{Binding User.DateOfBirth, StringFormat='{}{0:dd.MM.yyyy}'}"
+                                FontSize="16"
+                                VerticalOptions="FillAndExpand"
+                                HorizontalTextAlignment="Start"
+                                VerticalTextAlignment="Center" />
+                            <Image
+                                VerticalOptions="Center"
+                                WidthRequest="20"
+                                Source="pen_sec.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileDetailsViewModel}}, Path=EditBirthCommand}">
+                                    </TapGestureRecognizer>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </StackLayout>
+            </Border>
+
+
+            <Label
+                TextDecorations="Underline"
+                WidthRequest="200"
+                FontSize="17"
+                HorizontalTextAlignment="Center"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                HorizontalOptions="Center"
+                Text="Chcesz zmienić hasło?">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileDetailsViewModel}}, Path=ChangePasswordCommand}">
+                    </TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+
+
+            <Label
+                Margin="0,30,0,10"
+                WidthRequest="350"
+                FontSize="16"
+                FontAttributes="Bold"
+                TextColor="#939393"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Rejestrując się do “TripPlanner” akceptujesz politykę prywatności i zasady serwisu">
+            </Label>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.CheckListViews.CreateCheckListPage"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.CheckList"
+            xmlns:model="clr-namespace:TripPlanner.Models.DTO.CheckListDTOs;assembly=TripPlanner.Models"
+            x:DataType="viewmodel:CreateCheckListViewModels"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False">
+
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="20">
+            <Grid
+                Margin="10,5,10,5"
+                HorizontalOptions="Fill">
+                <ImageButton
+                    HorizontalOptions="Start"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    Command="{Binding GoBackCommand}"
+                    HeightRequest="35"
+                    WidthRequest="35" />
+                <Label
+                    HorizontalOptions="Center"
+                    FontSize="20"
+                    VerticalOptions="Center"
+                    Text="Checklisty i ankiety" />
+            </Grid>
+
+            <Label
+                Margin="0,40,0,0"
+                VerticalOptions="Start"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                FontSize="20"
+                Text="Tworzenie nowej checklisty" />
+            
+            <ScrollView>
+                <Border
+                    Margin="20,0,20,0"
+                    BackgroundColor="#E3E3E3"
+                    StrokeThickness="0"
+                    VerticalOptions="Center"
+                    StrokeShape="RoundRectangle 20,20,20,20">
+                    <ScrollView>
+
+                        <StackLayout
+                            Padding="5,0,5,0">
+                            <Editor
+                                Keyboard="Chat"
+                                MinimumHeightRequest="35"
+                                MaximumHeightRequest="250"
+                                AutoSize="TextChanges"
+                                TextColor="#52AB98"
+                                FontAttributes="Bold"
+                                BackgroundColor="{StaticResource Gray100}"
+                                Text="{Binding Name}"
+                                FontSize="20"
+                                Placeholder="Nazwa checklisty"
+                                VerticalOptions="FillAndExpand"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center" />
+                        </StackLayout>
+                    </ScrollView>
+                </Border>
+            </ScrollView>
+            
+            <CollectionView
+                EmptyView=""
+                Margin="20,10,20,10"
+                ItemsSource="{Binding Fields}"
+                SelectionMode="None">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Vertical"
+                        ItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodel:Tuple2String">
+                        <Grid
+                            ColumnSpacing="10"
+                            ColumnDefinitions="25,*,Auto,25">
+                            <Image
+                                Grid.Column="0"
+                                VerticalOptions="Start"
+                                Source="dot_sec.png"
+                                WidthRequest="25"
+                                HeightRequest="25" />
+                            <Label
+                                Grid.Column="1"
+                                VerticalOptions="Start"
+                                TextColor="#52AB98"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                Text="{Binding Name}" />
+                            <Label
+                                Grid.Column="2"
+                                VerticalOptions="Start"
+                                TextColor="#52AB98"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                WidthRequest="70"
+                                Text="{Binding Multiplicity}" />
+                            <ImageButton
+                                Grid.Column="3"
+                                VerticalOptions="End"
+                                WidthRequest="25"
+                                HeightRequest="25"
+                                Source="trash_sec.png"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CreateCheckListViewModels}}, Path=DeleteAnswerCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeShape="RoundRectangle 25,25,25,25"
+                Padding="15,5,15,5"
+                StrokeThickness="2"
+                BackgroundColor="Transparent"
+                Stroke="{StaticResource Secondary}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CreateCheckListViewModels}}, Path=AddAnswerCommand}">
+                    </TapGestureRecognizer>
+                </Border.GestureRecognizers>
+                <Label
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource Secondary}"
+                    FontSize="17"
+                    VerticalOptions="Center"
+                    Text="{Binding LabelButton}"></Label>
+            </Border>
+            
+            <HorizontalStackLayout
+                Spacing="5"
+                HorizontalOptions="Center">
+                <CheckBox
+                    IsChecked="{Binding IsPublic}"/>
+                <Label
+                    VerticalOptions="Center"
+                    FontAttributes="Bold"
+                    TextColor="#939393"
+                    FontSize="16"
+                    Text="Czy checkLista ma być publiczna?">
+                </Label>
+            </HorizontalStackLayout>
+
+            <Button
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="White"
+                FontSize="20"
+                FontAttributes="Bold"
+                WidthRequest="200"
+                CornerRadius="25"
+                HeightRequest="50"
+                Command="{Binding CreateCommand}"
+                Text="Utwórz" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

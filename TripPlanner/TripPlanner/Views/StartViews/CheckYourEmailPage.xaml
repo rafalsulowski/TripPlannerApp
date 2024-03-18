@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TripPlanner.Views.StartViews.CheckYourEmailPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light=white,Dark=black}"
+             Shell.TabBarIsVisible="False">
+
+    <VerticalStackLayout Spacing="30">
+        <Label
+            Margin="0,100,0,0"
+            WidthRequest="300"
+            FontSize="20"
+            FontAttributes="Bold"
+            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            x:Name="Name">
+        </Label>
+
+        <Button
+            Grid.Row="2"
+            Clicked="GoLogin"
+            WidthRequest="150"
+            FontSize="20"
+            TextColor="White"
+            BackgroundColor="{StaticResource Primary}"
+            CornerRadius="20"
+            HorizontalOptions="Center"
+            Text="Zaloguj">
+        </Button>
+    </VerticalStackLayout>
+</ContentPage>

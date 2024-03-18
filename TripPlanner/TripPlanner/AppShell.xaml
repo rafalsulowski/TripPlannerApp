@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TripPlanner.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TripPlanner.Views.HomeViews"
+    xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Home"
+    x:DataType="viewmodel:NotificationViewModel"
+    Shell.FlyoutBehavior="Disabled">
+
+    <TabBar Shell.TabBarTitleColor="#2B6777">
+        <ShellContent Route="Home"          Icon="{AppThemeBinding Light=airplane_wt.png, Dark=airplane_dt.png}" Title="Wyjazdy" ContentTemplate="{DataTemplate local:HomePage}"/>
+        <ShellContent Route="Friends"       Icon="{AppThemeBinding Light=person_wt.png, Dark=person_dt.png}"     Title="Znajomi" ContentTemplate="{DataTemplate local:FriendsPage}"/>
+        <ShellContent Route="Notifiactions" Icon="{AppThemeBinding Light=bell_wt.png, Dark=bell_dt.png}"         Title="Akcje" ContentTemplate="{DataTemplate local:NotificationPage}"/>
+        <ShellContent Route="Profile"       Icon="{AppThemeBinding Light=person_wt.png, Dark=person_dt.png}"     Title="Konto" ContentTemplate="{DataTemplate local:ProfilePage}"/>
+    </TabBar>
+</Shell>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+            xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.HomeViews.ProfilePage"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.User"
+            x:DataType="viewmodel:ProfileViewModel"
+            Shell.NavBarIsVisible="False">
+
+    <Grid
+        Margin="20"
+        RowSpacing="20"
+        RowDefinitions="Auto,Auto,Auto,Auto,*,Auto">
+        <Grid
+            Grid.Row="0"
+            RowDefinitions="Auto"
+            ColumnDefinitions="30,*,30">
+            <ImageButton
+                Grid.Column="2"
+                Source="{AppThemeBinding Light=setting_wt.png, Dark=setting_dt.png}"
+                Command="{Binding GoSettingsCommand}"
+                HeightRequest="25" />
+        </Grid>
+        
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Spacing="10">
+            <Image
+                Source="person_circle_sec.png"
+                WidthRequest="50"
+                HeightRequest="50"
+                HorizontalOptions="Start">
+            </Image>
+            <VerticalStackLayout
+                Spacing="10">
+                <Label
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    HorizontalOptions="Start"
+                    Text="{Binding User.FullName}">
+                </Label>
+                <Label
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    HorizontalOptions="Start"
+                    Text="{Binding User.Email}">
+                </Label>
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout
+            Grid.Row="2"
+            Margin="0,30,0,0"
+            Spacing="10">
+            <HorizontalStackLayout
+                Spacing="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileViewModel}}, Path=ShowUserDataCommand}" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Image
+                    Source="text_sec.png"
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    HorizontalOptions="Start" />
+                <Label
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    HorizontalOptions="Start"
+                    Text="Dane użytkownika">
+                </Label>
+            </HorizontalStackLayout>
+            <BoxView
+                Color="{AppThemeBinding Light={StaticResource Secondary}, Dark=#939393}"
+                HeightRequest="2">
+            </BoxView>
+        </VerticalStackLayout>
+
+        <!--<VerticalStackLayout
+            Grid.Row="2"
+            Spacing="10">
+            <HorizontalStackLayout
+                Spacing="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileViewModel}}, Path=GoRoutesCommand}" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Image
+                    Source="tour_sec.png"
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    HorizontalOptions="Start" />
+                <Label
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    HorizontalOptions="Start"
+                    Text="Trasy">
+                </Label>
+            </HorizontalStackLayout>
+            <BoxView
+                Color="{AppThemeBinding Light={StaticResource Secondary}, Dark=#939393}"
+                HeightRequest="2">
+            </BoxView>
+        </VerticalStackLayout>-->
+
+        <!--<VerticalStackLayout
+            Grid.Row="2"
+            Spacing="10">
+            <HorizontalStackLayout
+                Spacing="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileViewModel}}, Path=GoCheckListCommand}" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Image
+                    Source="checklist_sec.png"
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    HorizontalOptions="Start" />
+                <Label
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    HorizontalOptions="Start"
+                    Text="Checklisty i ankiety">
+                </Label>
+            </HorizontalStackLayout>
+            <BoxView
+                Color="{AppThemeBinding Light={StaticResource Secondary}, Dark=#939393}"
+                HeightRequest="2">
+            </BoxView>
+        </VerticalStackLayout>-->
+
+        <VerticalStackLayout
+            Grid.Row="3"
+            Spacing="10">
+            <HorizontalStackLayout
+                Spacing="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileViewModel}}, Path=LogoutCommand}" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Image
+                    Source="logout_red.png"
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    HorizontalOptions="Start" />
+                <Label
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    TextColor="#C96C45"
+                    HorizontalOptions="Start"
+                    Text="Wyloguj">
+                </Label>
+            </HorizontalStackLayout>
+            <BoxView
+                Color="{AppThemeBinding Light={StaticResource Secondary}, Dark=#939393}"
+                HeightRequest="2">
+            </BoxView>
+        </VerticalStackLayout>
+
+        <Label
+            Grid.Row="5"
+            VerticalOptions="End"
+            FontSize="16"
+            TextColor="#939393"
+            HorizontalTextAlignment="Center"
+            HorizontalOptions="Center"
+            Text="wersja oprogramowania 1.0">
+        </Label>
+    </Grid>
+</ContentPage>

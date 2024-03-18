@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TripPlanner.Views.ShareViews.TransferPage"
+             xmlns:local="clr-namespace:TripPlanner.Converter"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Shares"
+             xmlns:model="clr-namespace:TripPlanner.Models.DTO.TourDTOs;assembly=TripPlanner.Models"
+             xmlns:model2="clr-namespace:TripPlanner.Models.DTO.BillDTOs;assembly=TripPlanner.Models"
+             x:DataType="viewmodel:TransferViewModel"
+             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <local:SetDecimalPrecision2Converter
+            x:Key="DecimalPrecision" />
+        <local:ToPolishMonthConverter
+            x:Key="ToPolishMonthConverter" />
+    </ContentPage.Resources>
+
+
+    <ScrollView>
+        <StackLayout
+            Orientation="Vertical"
+            Spacing="10">
+            <Grid
+                RowDefinitions="Auto"
+                ColumnDefinitions="30,*,30"
+                Margin="10,5,10,0">
+                <ImageButton
+                    Command="{Binding GoBackCommand}"
+                    Grid.Column="0"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    HeightRequest="30">
+                </ImageButton>
+                <Label
+                    Grid.Column="1"
+                    Text="Rachunek"
+                    HorizontalOptions="Center"
+                    FontSize="18"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <Image
+                Margin="0,40,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Source="money_coin_sec.png"
+                WidthRequest="60"
+                HeightRequest="60" />
+            
+            <Label
+                Text="{Binding Transfer.PayerName}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                HorizontalOptions="Center"
+                FontSize="18"
+                FontAttributes="Bold" />
+
+            <Label
+                Text="{Binding Transfer.Value, Converter={StaticResource DecimalPrecision}, StringFormat='{0}zł'}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                HorizontalOptions="Center"
+                FontSize="22"
+                FontAttributes="Bold" />
+
+
+            <Label
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                HorizontalOptions="Center"
+                FontSize="18"
+                FontAttributes="Bold">
+                <Label.Text>
+                    <MultiBinding
+                        StringFormat="{}Do {0}">
+                        <Binding
+                            Path="Transfer.ReceiverName" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+
+
+            <Label
+                TextColor="#939393"
+                HorizontalOptions="Center"
+                FontSize="16">
+                <Label.Text>
+                    <MultiBinding
+                        StringFormat="{}Rozliczenie dodane: {0}">
+                        <Binding
+                            Path="Transfer.CreatedDate"
+                            Converter="{StaticResource ToPolishMonthConverter}" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+            
+            <Label
+                Text="{Binding Transfer.CreatorName}"
+                TextColor="#939393"
+                HorizontalOptions="Center"
+                FontSize="16">
+            </Label>
+
+
+
+            <HorizontalStackLayout
+                Margin="0,50,0,0"
+                Spacing="10"
+                HorizontalOptions="Center">
+                <Image
+                    Source="image_sec.png"
+                    WidthRequest="25"
+                    HeightRequest="25" />
+                <Label
+                    FontAttributes="Bold"
+                    Text="Zobacz zdjęcie"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                    FontSize="16">
+                </Label>
+            </HorizontalStackLayout>
+
+            <Label
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                MaximumWidthRequest="300"
+                Text="{Binding Transfer.Description}"
+                TextColor="#939393"
+                FontSize="16">
+            </Label>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

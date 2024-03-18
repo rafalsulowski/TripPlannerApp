@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.HomeViews.NotificationDetailsPage"
+            xmlns:local="clr-namespace:TripPlanner.Converter"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Home"
+            xmlns:model="clr-namespace:TripPlanner.Models.DTO.UserDTOs;assembly=TripPlanner.Models"
+            x:DataType="viewmodel:NotificationDetailsViewModel"
+            Shell.TabBarIsVisible="False"
+            Shell.NavBarIsVisible="False">
+
+
+    <ScrollView>
+        <StackLayout
+            Orientation="Vertical"
+            Spacing="20">
+            <Grid
+                RowDefinitions="Auto"
+                ColumnDefinitions="30,*,30"
+                Margin="10,5,10,0">
+                <ImageButton
+                    Command="{Binding GoBackCommand}"
+                    Grid.Column="0"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    HeightRequest="30">
+                </ImageButton>
+                <Label
+                    Grid.Column="1"
+                    Text="Powiadomienie"
+                    HorizontalOptions="Center"
+                    FontSize="18"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <Image
+                Margin="0,60,0,0"
+                WidthRequest="60"
+                HeightRequest="60"
+                Source="{Binding Notification.IconPath}"
+                HorizontalOptions="Center" />
+            
+            <Label
+                Text="{Binding Notification.Name}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                MaximumWidthRequest="300"
+                FontSize="20"
+                FontAttributes="Bold" />
+
+            <Label
+                Text="{Binding Notification.Message}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                MaximumWidthRequest="300"
+                FontSize="18" />
+
+            <Label
+                TextColor="#939393"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                MaximumWidthRequest="300"
+                FontSize="18">
+                <Label.Text>
+                    <MultiBinding
+                        StringFormat="{}Utworzono {0:dd.MM.yyyy}">
+                        <Binding
+                            Path="Notification.CreatedDate" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+
+            <Button
+                IsVisible="{Binding IsVisible}"
+                Margin="0,40,0,0"
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="White"
+                FontSize="20"
+                FontAttributes="Bold"
+                WidthRequest="220"
+                CornerRadius="25"
+                HeightRequest="50"
+                Command="{Binding GoActionCommand}"
+                Text="Zobacz szczegóły" />
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

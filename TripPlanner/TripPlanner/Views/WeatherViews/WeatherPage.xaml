@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.WeatherViews.WeatherPage"
+            xmlns:localTemplates="clr-namespace:TripPlanner.DataTemplates"
+            xmlns:local="clr-namespace:TripPlanner.Converter"
+            xmlns:controls="clr-namespace:TripPlanner.Controls"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Weather"
+            xmlns:model="clr-namespace:TripPlanner.Services"
+            x:DataType="viewmodel:WeatherViewModel"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False">
+
+    <ContentPage.Resources>
+
+        <local:WindDirConverter
+            x:Key="WindDirConverter" />
+        <local:BoolToPolishConverter
+            x:Key="BoolToPolishConverter" />
+        <local:ToPolishMonthConverter
+            x:Key="ToPolishMonthConverter" />
+        
+    </ContentPage.Resources>
+
+
+    <ScrollView>
+        <VerticalStackLayout
+            Margin="10,5,10,10"
+            Spacing="10">
+            <Grid
+                RowDefinitions="Auto"
+                ColumnDefinitions="30,*,30">
+                <ImageButton
+                    Grid.Column="0"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    Command="{Binding GoBackCommand}"
+                    HeightRequest="30" />
+
+                <Label
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    FontSize="18"
+                    Text="Pogoda"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <HorizontalStackLayout
+                Margin="0,10,0,0"
+                Spacing="10"
+                HorizontalOptions="Center">
+                <Label
+                    HorizontalTextAlignment="Center"
+                    WidthRequest="300"
+                    TextColor="#939393"
+                    FontSize="16"
+                    Text="{Binding Weather.Location}">
+                </Label>
+                <Image
+                    IsVisible="{Binding IsOrganizer}"
+                    Source="pen_sec.png"
+                    WidthRequest="20"
+                    HeightRequest="20">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:WeatherViewModel}}, Path=EditLocationCommand}">
+                        </TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+            </HorizontalStackLayout>
+
+            <Label
+                HorizontalOptions="Center"
+                TextColor="#939393"
+                FontSize="17"
+                Text="{Binding Weather.Date, Converter={StaticResource ToPolishMonthConverter}}">
+            </Label>
+            
+            <HorizontalStackLayout
+                Spacing="30"
+                HorizontalOptions="Center">
+                <Image
+                    Source="{Binding Weather.Icon}"
+                    WidthRequest="60"
+                    HeightRequest="60">
+                </Image>
+                <Label
+                    VerticalOptions="Center"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource Primary}"
+                    FontSize="40">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{}{0}°C">
+                            <Binding
+                                Path="Weather.Temperature" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </HorizontalStackLayout>
+
+            <Label
+                Margin="0,5,0,0"
+                HorizontalOptions="Center"
+                FontAttributes="Bold"
+                TextColor="{StaticResource Primary}"
+                FontSize="16"
+                Text="{Binding Weather.Description}">
+            </Label>
+
+            <Label
+                HorizontalOptions="Center"
+                FontAttributes="Bold"
+                TextColor="{StaticResource Primary}"
+                FontSize="16">
+                <Label.Text>
+                    <MultiBinding
+                        StringFormat="{}Odczuwalna {0}°C">
+                        <Binding
+                            Path="Weather.TemperatureFeels" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+
+
+            <HorizontalStackLayout
+                Margin="0,20,0,0"
+                Spacing="50"
+                HorizontalOptions="Center">
+                <HorizontalStackLayout 
+                    HorizontalOptions="Center"
+                    Spacing="10">
+                    <Image
+                        Source="sunrise_sec.png"
+                        WidthRequest="25"
+                        HeightRequest="25">
+                    </Image>
+                    <Label
+                        TextColor="{StaticResource Primary}"
+                        FontSize="16">
+                        <Label.Text>
+                            <MultiBinding
+                                StringFormat="{}{0:HH:mm}">
+                                <Binding
+                                    Path="Weather.Sunrise" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout
+                    HorizontalOptions="Center"
+                    Spacing="10">
+                    <Image
+                        Source="sunset_sec.png"
+                        WidthRequest="25"
+                        HeightRequest="25">
+                    </Image>
+                    <Label
+                        TextColor="{StaticResource Primary}"
+                        FontSize="16">
+                        <Label.Text>
+                            <MultiBinding
+                                StringFormat="{}{0:HH:mm}">
+                                <Binding
+                                    Path="Weather.Sunset" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                </HorizontalStackLayout>
+            </HorizontalStackLayout>
+
+            <Label
+                HorizontalOptions="Center"
+                Margin="0,10,0,0"
+                TextColor="#939393"
+                FontSize="18"
+                Text="Pogoda gdzinowa 24h do przodu">
+            </Label>
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <CollectionView
+                    MaximumWidthRequest="700"
+                    BackgroundColor="#EBEEF4"
+                    ItemsSource="{Binding Weather.Hours}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Horizontal"
+                            ItemSpacing="0">
+                        </LinearItemsLayout>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model:SingleWeahterModel">
+                            <VerticalStackLayout
+                                Padding="10"
+                                Spacing="5">
+                                <Label
+                                    HorizontalOptions="Center"
+                                    TextColor="#939393"
+                                    FontSize="17"
+                                    Text="{Binding Date}">
+                                </Label>
+                                <Image
+                                    HorizontalOptions="Center"
+                                    WidthRequest="25"
+                                    HeightRequest="25"
+                                    Source="{Binding Icon}">
+                                </Image>
+                                <Label
+                                    HorizontalOptions="Center"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource Primary}"
+                                    FontSize="17">
+                                    <Label.Text>
+                                        <MultiBinding
+                                            StringFormat="{}{0}°C">
+                                            <Binding
+                                                Path="Temperature" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <HorizontalStackLayout
+                                    Spacing="5"
+                                    HorizontalOptions="Center">
+                                    <Image
+                                        WidthRequest="15"
+                                        HeightRequest="15"
+                                        Source="water_sec.png">
+                                    </Image>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Primary}"
+                                        FontSize="16">
+                                        <Label.Text>
+                                            <MultiBinding
+                                                StringFormat="{}{0}%">
+                                                <Binding
+                                                    Path="PrecipProb" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+
+            <Label
+                HorizontalOptions="Center"
+                Margin="0,10,0,0"
+                TextColor="#939393"
+                FontSize="18"
+                Text="Pogoda na 14 dni do przodu">
+            </Label>
+
+            <Border
+                HorizontalOptions="Center"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <CollectionView
+                    MaximumWidthRequest="700"
+                    BackgroundColor="#EBEEF4"
+                    ItemsSource="{Binding Weather.Days}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Horizontal"
+                            ItemSpacing="0">
+                        </LinearItemsLayout>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model:SingleWeahterModel">
+                            <VerticalStackLayout
+                                Padding="10"
+                                Spacing="5">
+                                <Label
+                                    HorizontalOptions="Center"
+                                    TextColor="#939393"
+                                    FontSize="17"
+                                    Text="{Binding Date}">
+                                </Label>
+                                <Image
+                                    HorizontalOptions="Center"
+                                    WidthRequest="25"
+                                    HeightRequest="25"
+                                    Source="{Binding Icon}">
+                                </Image>
+                                <Label
+                                    HorizontalOptions="Center"
+                                    FontAttributes="Bold"
+                                    TextColor="{StaticResource Primary}"
+                                    FontSize="17">
+                                    <Label.Text>
+                                        <MultiBinding
+                                            StringFormat="{}{0}°C">
+                                            <Binding
+                                                Path="Temperature" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <HorizontalStackLayout
+                                    Spacing="5"
+                                    HorizontalOptions="Center">
+                                    <Image
+                                        WidthRequest="15"
+                                        HeightRequest="15"
+                                        Source="water_sec.png">
+                                    </Image>
+                                    <Label
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Primary}"
+                                        FontSize="16">
+                                        <Label.Text>
+                                            <MultiBinding
+                                                StringFormat="{}{0}%">
+                                                <Binding
+                                                    Path="PrecipProb" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+
+
+            <Label
+                HorizontalOptions="Start"
+                TextColor="#939393"
+                FontSize="18"
+                Text="Sczegóły">
+            </Label>
+
+            <Border
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <Grid
+                    Padding="10"
+                    BackgroundColor="#EBEEF4"
+                    ColumnDefinitions="Auto, *, Auto"
+                    RowSpacing="10"
+                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Text="Wilgotność"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.Humidity, StringFormat='{}{0}%'}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Text="Szansa opadów"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="1"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.PrecipProb, StringFormat='{}{0}%'}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        Text="Opady"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="2"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.Precip, StringFormat='{}{0}mm'}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="3"
+                        Text="Śnieg"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="3"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.Snow, Converter={StaticResource BoolToPolishConverter}}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="4"
+                        Text="Prędkość wiatru"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="4"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.WindSpeed, StringFormat='{}{0}km/h'}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="5"
+                        Text="Kierunek wiatru"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="5"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.WindDir, Converter={StaticResource WindDirConverter}}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="6"
+                        Text="Indeks UV"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="6"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.UvIndex}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="7"
+                        Text="Faza księżyca"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="7"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.MoonPhase}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="8"
+                        Text="Ciśnienie"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="8"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.Pressure, StringFormat='{}{0}mPa'}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="9"
+                        Text="Widoczność"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="9"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.Visibility, StringFormat='{}{0}km'}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="10"
+                        Text="Procent zachmurzenia nieba"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                    <Label
+                        Grid.Column="2"
+                        Grid.Row="10"
+                        HorizontalTextAlignment="End"
+                        Text="{Binding Weather.Cloudcover, StringFormat='{}{0}%'}"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="17" />
+                </Grid>
+            </Border>
+
+            <Label
+                HorizontalOptions="Center"
+                TextColor="#939393"
+                FontSize="16"
+                Text="{Binding Weather.CreatedDate, StringFormat='{}Raport wygenerowano {0:HH:mm}'}">
+            </Label>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

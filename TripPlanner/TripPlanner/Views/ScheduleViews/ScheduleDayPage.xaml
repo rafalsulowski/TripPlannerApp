@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:localTemplates="clr-namespace:TripPlanner.DataTemplates"
+            xmlns:local="clr-namespace:TripPlanner.Converter"
+            xmlns:controls="clr-namespace:TripPlanner.Controls"
+            x:Class="TripPlanner.Views.ScheduleViews.ScheduleDayPage"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Schedule"
+            xmlns:model="clr-namespace:TripPlanner.Models.DTO.ScheduleDTOs;assembly=TripPlanner.Models"
+            x:DataType="viewmodel:ScheduleDayViewModel"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False">
+
+
+    <ContentPage.Resources>
+
+        <local:ToPolishDaysConverter
+            x:Key="ToPolishDaysConverter" />
+        <local:DurationConverter
+            x:Key="DurationConverter" />
+
+        <DataTemplate
+            x:Key="WithDuration"
+            x:DataType="viewmodel:ScheduleDayViewModel">
+            <SwipeView>
+                <SwipeView.LeftItems>
+                    <SwipeItems>
+                        <SwipeItem
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ScheduleDayViewModel}}, Path=UpdateEventCommand}"
+                            CommandParameter="{Binding .}"
+                            Text="Edytuj"
+                            IconImageSource="pen_sec.png"
+                            BackgroundColor="#00A307">
+                        </SwipeItem>
+                        <SwipeItem
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ScheduleDayViewModel}}, Path=DeleteEventCommand}"
+                            CommandParameter="{Binding .}"
+                            Text="Usuń"
+                            IconImageSource="trash_sec.png"
+                            BackgroundColor="#CA4840">
+                        </SwipeItem>
+                    </SwipeItems>
+                </SwipeView.LeftItems>
+                <Grid
+                    BackgroundColor="#C8D8E4"
+                    RowSpacing="1"
+                    ColumnSpacing="1"
+                    x:DataType="model:ScheduleEventDTO"
+                    RowDefinitions="Auto"
+                    ColumnDefinitions="150, *">
+
+                    <Border
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        BackgroundColor="white">
+                        <VerticalStackLayout>
+                            <Label
+                                x:Name="STT"
+                                FontSize="17"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource Secondary}"
+                                Margin="20,10,5,5"
+                                BackgroundColor="white"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Text="{Binding StartTime, StringFormat='{}{0:HH:mm}'}"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center" />
+
+                            <HorizontalStackLayout
+                                Spacing="0"
+                                Margin="30,0,5,0">
+                                <VerticalStackLayout>
+                                    <Image
+                                        Source="dots_vertical_sec.png"></Image>
+                                    <Image
+                                        Source="dots_vertical_sec.png"></Image>
+                                </VerticalStackLayout>
+
+                                <controls:TimeDurationLabelControl
+                                    Margin="5,0,0,0"
+                                    StartTime="{Binding StartTime}"
+                                    StopTime="{Binding StopTime}"/>
+
+                            </HorizontalStackLayout>
+                            <Label
+                                x:Name="SPT"
+                                FontSize="17"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource Secondary}"
+                                Margin="20,5,5,10"
+                                BackgroundColor="white"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Text="{Binding StopTime, StringFormat='{}{0:HH:mm}'}"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        BackgroundColor="white">
+                        <Label
+                            Margin="10,10,5,10"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                            BackgroundColor="white"
+                            Grid.Column="0"
+                            Text="{Binding Name}"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start" />
+                    </Border>
+                </Grid>
+            </SwipeView>
+        </DataTemplate>
+        
+        <DataTemplate
+            x:Key="Simple"
+            x:DataType="viewmodel:ScheduleDayViewModel">
+            <SwipeView>
+                <SwipeView.LeftItems>
+                    <SwipeItems>
+                        <SwipeItem
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ScheduleDayViewModel}}, Path=UpdateEventCommand}"
+                            CommandParameter="{Binding .}"
+                            Text="Edytuj"
+                            IconImageSource="pen_sec.png"
+                            BackgroundColor="#00A307" />
+                        <SwipeItem
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ScheduleDayViewModel}}, Path=DeleteEventCommand}"
+                            CommandParameter="{Binding .}"
+                            Text="Usuń"
+                            IconImageSource="trash_sec.png"
+                            BackgroundColor="#CA4840" />
+                    </SwipeItems>
+                </SwipeView.LeftItems>
+                <Grid
+                    BackgroundColor="#C8D8E4"
+                    RowSpacing="1"
+                    ColumnSpacing="1"
+                    x:DataType="model:ScheduleEventDTO"
+                    RowDefinitions="Auto"
+                    ColumnDefinitions="150, *">
+
+                    <Border
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        BackgroundColor="white">
+                        <Label
+                            FontSize="17"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource Secondary}"
+                            Margin="20,10,5,10"
+                            BackgroundColor="white"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="{Binding StartTime, StringFormat='{}{0:HH:mm}'}"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center" />
+                    </Border>
+                    <Border
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        BackgroundColor="white">
+                        <Label
+                            Margin="10,10,5,10"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                            BackgroundColor="white"
+                            Grid.Column="0"
+                            Text="{Binding Name}"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start" />
+                    </Border>
+                </Grid>
+            </SwipeView>
+        </DataTemplate>
+
+        <localTemplates:ScheduleEventDataTemplateSelector
+            x:Key="ScheduleEventDataTemplateSelector"
+            WithDuration="{StaticResource WithDuration}"
+            Simple="{StaticResource Simple}" />
+    </ContentPage.Resources>
+
+    <StackLayout
+        Orientation="Vertical"
+        Spacing="10">
+        <Grid
+            RowDefinitions="Auto"
+            ColumnDefinitions="30,*,30"
+            Margin="10,5,10,0">
+            <ImageButton
+                Grid.Column="0"
+                Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                Command="{Binding GoBackCommand}"
+                HeightRequest="30" />
+
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                FontSize="18"
+                Text="Harmonogram"
+                VerticalOptions="Center" />
+        </Grid>
+
+
+        <HorizontalStackLayout 
+            Spacing="10"
+            HorizontalOptions="Center">
+            <Image
+                HorizontalOptions="Center"
+                WidthRequest="20"
+                HeightRequest="20"
+                Source="previous_day_sec.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ScheduleDayViewModel}}, Path=GoPreviousCommand}"
+                        CommandParameter="{Binding .}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                FontSize="18">
+                <Label.Text>
+                    <MultiBinding
+                        StringFormat="{}{0:dd.MM.yyyy} - {1}">
+                        <Binding
+                            Path="Schedule.Date" />
+                        <Binding
+                            Converter="{StaticResource ToPolishDaysConverter}"
+                            Path="Schedule.Date" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+            <Image
+                HorizontalOptions="Center"
+                WidthRequest="20"
+                HeightRequest="20"
+                Source="next_day_sec.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ScheduleDayViewModel}}, Path=GoNextCommand}"
+                        CommandParameter="{Binding .}" />
+                </Image.GestureRecognizers>
+            </Image>
+        </HorizontalStackLayout>
+
+        <Label
+            Margin="0,20,0,10"
+            HorizontalOptions="Center"
+            IsVisible="{Binding EmptyLabel}"
+            Text="Brak wydarzeń w harmonogramie">
+        </Label>
+
+        <CollectionView
+            ItemTemplate="{StaticResource ScheduleEventDataTemplateSelector}"
+            ItemsSource="{Binding Events}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Vertical"
+                    ItemSpacing="0" />
+            </CollectionView.ItemsLayout>
+        </CollectionView>
+        
+        <ImageButton
+            Command="{Binding AddEventCommand}"
+            Margin="0,30,0,0"
+            HeightRequest="50"
+            WidthRequest="50"
+            HorizontalOptions="Center"
+            Source="plus_circle_sec.png">
+        </ImageButton>
+        
+    </StackLayout>
+</ContentPage>

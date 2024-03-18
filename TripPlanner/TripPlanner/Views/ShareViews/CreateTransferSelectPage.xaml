@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.ShareViews.CreateTransferSelectPage"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:localTemplates="clr-namespace:TripPlanner.DataTemplates"
+            xmlns:local="clr-namespace:TripPlanner.Converter"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Shares"
+            xmlns:model="clr-namespace:TripPlanner.Models.DTO.BillDTOs;assembly=TripPlanner.Models"
+            xmlns:model2="clr-namespace:TripPlanner.Models.DTO.TourDTOs;assembly=TripPlanner.Models"
+            x:DataType="viewmodel:CreateTransferSelectViewModel"
+            Shell.TabBarIsVisible="False"
+            Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+
+        <local:SetDecimalPrecision2Converter
+            x:Key="DecimalPrecision" />
+        
+        <DataTemplate
+            x:Key="BillBorrowed"
+            x:DataType="model:OtherUser">
+            <!--uczestnik ktory porzyczyl pieniadze użytkownikowi zalogowanemu-->
+            <HorizontalStackLayout
+                Spacing="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CreateTransferSelectViewModel}}, Path=GoNextOtherUserCommand}"
+                        CommandParameter="{Binding .}">
+                    </TapGestureRecognizer>
+                </HorizontalStackLayout.GestureRecognizers>
+                <Image
+                    HeightRequest="25"
+                    WidthRequest="25"
+                    Source="person_circle_sec.png">
+                </Image>
+                <Label
+                    FontSize="15"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontAttributes="Bold"
+                    VerticalOptions="Center"
+                    Text="Zalegasz">
+                </Label>
+                <Label
+                    FontSize="15"
+                    TextColor="#C96C45"
+                    FontAttributes="Bold"
+                    VerticalOptions="Center"
+                    Text="{Binding Saldo, Converter={StaticResource DecimalPrecision}, StringFormat='{0}zł'}">
+                </Label>
+                <Label
+                    FontSize="15"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontAttributes="Bold"
+                    VerticalOptions="Center">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{}do {0}">
+                            <Binding
+                                Path="Name" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </HorizontalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate
+            x:Key="BillOwe"
+            x:DataType="model:OtherUser">
+            <!--uczestnik ktory zalega pieniadze użytkownikowi zalogowanemu-->
+            <HorizontalStackLayout
+                Spacing="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CreateTransferSelectViewModel}}, Path=GoNextOtherUserCommand}"
+                        CommandParameter="{Binding .}">
+                    </TapGestureRecognizer>
+                </HorizontalStackLayout.GestureRecognizers>
+                <Image
+                    HeightRequest="25"
+                    WidthRequest="25"
+                    Source="person_circle_sec.png">
+                </Image>
+                <Label
+                    FontSize="15"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontAttributes="Bold"
+                    VerticalOptions="Center"
+                    Text="Porzyczyłeś(aś)">
+                </Label>
+                <Label
+                    FontSize="15"
+                    TextColor="#52AB98"
+                    FontAttributes="Bold"
+                    VerticalOptions="Center"
+                    Text="{Binding Saldo, Converter={StaticResource DecimalPrecision}, StringFormat='{0}zł'}">
+                </Label>
+                <Label
+                    FontSize="15"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontAttributes="Bold"
+                    MaximumWidthRequest="140"
+                    VerticalOptions="Center">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{}do {0}">
+                            <Binding
+                                Path="Name" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </HorizontalStackLayout>
+        </DataTemplate>
+
+        <localTemplates:TransferSettleParticipantDataTemplateSelector
+            x:Key="TransferSettleParticipantDataTemplateSelector"
+            BillBorrowed="{StaticResource BillBorrowed}"
+            BillOwe="{StaticResource BillOwe}" />
+    </ContentPage.Resources>
+
+
+
+    <ScrollView>
+        <StackLayout
+            Orientation="Vertical"
+            Spacing="20">
+            <Grid
+                RowDefinitions="Auto"
+                ColumnDefinitions="30,*,30"
+                Margin="10,5,10,0">
+                <ImageButton
+                    Command="{Binding ExitCommand}"
+                    Grid.Column="0"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    HeightRequest="30">
+                </ImageButton>
+                <Label
+                    Grid.Column="1"
+                    Text="Rachunek"
+                    HorizontalOptions="Center"
+                    FontSize="18"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <Label
+                Margin="0,40,0,0"
+                Text="{Binding HeaderLabel}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                HorizontalOptions="Center"
+                FontSize="20"
+                FontAttributes="Bold" />
+
+            <CollectionView
+                IsVisible="{Binding IsSettleParticipantMode}"
+                EmptyView="Brak uczestników do rozliczenia"
+                ItemsSource="{Binding ParticipantsToSettle}"
+                ItemTemplate="{StaticResource TransferSettleParticipantDataTemplateSelector}"
+                Margin="20,0,20,0">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        ItemSpacing="20"
+                        Orientation="Vertical"></LinearItemsLayout>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+
+            <CollectionView
+                IsVisible="{Binding IsAllParticipantMode}"
+                EmptyView="Wyjazd nie posiada uczestników"
+                Margin="20,0,20,0"
+                ItemsSource="{Binding AllParticipants}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        ItemSpacing="20"
+                        Orientation="Vertical"></LinearItemsLayout>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate
+                        x:DataType="model2:ExtendParticipantDTO">
+                        <HorizontalStackLayout
+                            Spacing="10">
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CreateTransferSelectViewModel}}, Path=GoSelectRecipientCommand}"
+                                    CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </HorizontalStackLayout.GestureRecognizers>
+                            <Image
+                                HeightRequest="25"
+                                WidthRequest="25"
+                                Source="person_circle_sec.png">
+                            </Image>
+                            <Label
+                                FontSize="17"
+                                TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                Text="{Binding FullName}">
+                            </Label>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label
+                IsVisible="{Binding IsVisibleChangeMode}"
+                HorizontalOptions="Start"
+                Margin="20,10,0,0"
+                Text="{Binding ModeLabel}"
+                FontSize="18"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                FontAttributes="Bold">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CreateTransferSelectViewModel}}, Path=ChangeModeCommand}">
+                    </TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+                xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                x:Class="TripPlanner.Views.ScheduleViews.EventPopups"
+                Color="Transparent"
+                CanBeDismissedByTappingOutsideOfPopup="True">
+
+    <Border
+        Stroke="white"
+        StrokeThickness="2"
+        VerticalOptions="Center"
+        BackgroundColor="{AppThemeBinding Light=white, Dark=black}"
+        StrokeShape="RoundRectangle 20,20,20,20">
+        <VerticalStackLayout
+            Padding="10,40,10,80"
+            Spacing="20">
+            <Label
+                MaximumWidthRequest="250"
+                x:Name="LabelHeader"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                FontSize="22"
+                FontAttributes="Bold"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"/>
+
+            <VerticalStackLayout>
+                <Label
+                    HorizontalOptions="Start"
+                    FontSize="14"
+                    TextColor="#939393"
+                    Text="Nazwa">
+                </Label>
+                <Border
+                    Padding="3,0,3,0"
+                    BackgroundColor="{StaticResource Gray100}"
+                    StrokeShape="RoundRectangle 10,10,10,10">
+                    <Entry
+                        MinimumHeightRequest="35"
+                        WidthRequest="200"
+                        MaxLength="500"
+                        x:Name="NameEditor"
+                        Keyboard="Chat"
+                        TextColor="#52AB98"
+                        FontAttributes="Bold"
+                        FontSize="17"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center" />
+                </Border>
+            </VerticalStackLayout>
+            
+            <VerticalStackLayout>
+                <Label
+                    HorizontalOptions="Start"
+                    FontSize="14"
+                    TextColor="#939393"
+                    Text="Godzina rozpoczęcia">
+                </Label>
+                <Border
+                    HorizontalOptions="Center"
+                    WidthRequest="200"
+                    Padding="3,0,3,0"
+                    BackgroundColor="{StaticResource Gray100}"
+                    StrokeShape="RoundRectangle 10,10,10,10">
+                    <Entry
+                        WidthRequest="200"
+                        x:Name="StartDateEditor"
+                        MaxLength="5"
+                        Keyboard="Chat"
+                        TextColor="#52AB98"
+                        FontAttributes="Bold"
+                        FontSize="17"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center" />
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <HorizontalStackLayout>
+                    <CheckBox
+                        x:Name="CheckBoxStopTime"
+                        HorizontalOptions="Start">
+                    </CheckBox>
+                    <Label
+                        BindingContext="{x:Reference CheckBoxStopTime}"
+                        HorizontalOptions="Start"
+                        FontSize="14"
+                        TextColor="#939393"
+                        Text="Po Zakończenie">
+                    </Label>
+                </HorizontalStackLayout>
+
+                <Label
+                    BindingContext="{x:Reference CheckBoxStopTime}"
+                    IsVisible="{Binding IsChecked}"
+                    HorizontalOptions="Start"
+                    FontSize="14"
+                    TextColor="#939393"
+                    Text="Godzina zakończenia">
+                </Label>
+                <Label
+                    BindingContext="{x:Reference CheckBoxStopTime}"
+                    IsVisible="{Binding IsChecked}"
+                    x:Name="DurationLabel"
+                    HorizontalOptions="Start"
+                    FontSize="14"
+                    TextColor="#939393">
+                </Label>
+                <Border
+                    BindingContext="{x:Reference CheckBoxStopTime}"
+                    IsVisible="{Binding IsChecked}"
+                    Padding="3,0,3,0"
+                    BackgroundColor="{StaticResource Gray100}"
+                    StrokeShape="RoundRectangle 10,10,10,10">
+                    <Entry
+                        WidthRequest="200"
+                        x:Name="StopDateEditor"
+                        MaxLength="5"
+                        Keyboard="Chat"
+                        TextColor="#52AB98"
+                        FontAttributes="Bold"
+                        FontSize="17"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center" />
+                </Border>
+            </VerticalStackLayout>
+            
+            
+            <Border
+                Margin="0,0,0,50"
+                StrokeShape="RoundRectangle 25,25,25,25"
+                BackgroundColor="Transparent"
+                Stroke="{StaticResource Secondary}">
+                <Button
+                    Text="Gotowe"
+                    Clicked="Submit"
+                    BackgroundColor="Transparent"
+                    Padding="10"
+                    TextColor="{StaticResource Secondary}"
+                    HorizontalOptions="Center"
+                    FontSize="20"
+                    FontAttributes="Bold" />
+            </Border>
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

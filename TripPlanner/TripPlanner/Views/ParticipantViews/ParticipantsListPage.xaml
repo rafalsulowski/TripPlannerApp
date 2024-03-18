@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.ParticipantViews.ParticipantsListPage"
+             xmlns:localTemplates="clr-namespace:TripPlanner.DataTemplates"
+             xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Participant"
+            x:DataType="viewmodel:ParticipantsViewModel"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            x:Name="this"
+            Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+
+    <ContentPage.Resources>
+
+        <DataTemplate x:Key="MyPersonNormal">
+            <VerticalStackLayout
+                HorizontalOptions="Center">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=UserDetailsCommand}"
+                        CommandParameter="{Binding .}">
+                    </TapGestureRecognizer>
+                </VerticalStackLayout.GestureRecognizers>
+                <HorizontalStackLayout
+                    Spacing="5">
+                    <Label
+                        FontAttributes="Bold"
+                        WidthRequest="230"
+                        FontSize="18"
+                        TextColor="{AppThemeBinding Light=#C96C45, Dark={StaticResource Secondary}}">
+                        <Label.Text>
+                            <MultiBinding
+                                StringFormat="{}{0}. {1}">
+                                <Binding
+                                    Path="Order" />
+                                <Binding
+                                    Path="FullName" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Image
+                        WidthRequest="25"
+                        Source="{AppThemeBinding Light=organizer_gray.png, Dark=organizer_dt.png}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=DeleteOrganizerCommand}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </HorizontalStackLayout>
+                <Label
+                    FontSize="18"
+                    WidthRequest="260"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{}{0}, wiek {1}, {2}">
+                            <Binding
+                                Path="Email" />
+                            <Binding
+                                Path="Age" />
+                            <Binding
+                                Path="City" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="MyPersonOrganizer">
+            <VerticalStackLayout
+                HorizontalOptions="Center">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=UserDetailsCommand}"
+                        CommandParameter="{Binding .}">
+                    </TapGestureRecognizer>
+                </VerticalStackLayout.GestureRecognizers>
+                <HorizontalStackLayout
+                    Spacing="5">
+                    <Label
+                        FontAttributes="Bold"
+                        WidthRequest="230"
+                        FontSize="18"
+                        TextColor="{AppThemeBinding Light=#C96C45, Dark={StaticResource Secondary}}">
+                        <Label.Text>
+                            <MultiBinding
+                                StringFormat="{}{0}. {1}">
+                                <Binding
+                                    Path="Order" />
+                                <Binding
+                                    Path="FullName" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Image
+                        WidthRequest="25"
+                        Source="organizer_sec.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=DeleteOrganizerCommand}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </HorizontalStackLayout>
+                <Label
+                    FontSize="16"
+                    WidthRequest="260"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{}{0}, wiek {1}, {2}">
+                            <Binding
+                                Path="Email" />
+                            <Binding
+                                Path="Age" />
+                            <Binding
+                                Path="City" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="OrganizerParticipant">
+            <VerticalStackLayout
+                HorizontalOptions="Center">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=UserDetailsCommand}"
+                        CommandParameter="{Binding .}">
+                    </TapGestureRecognizer>
+                </VerticalStackLayout.GestureRecognizers>
+                <HorizontalStackLayout
+                    Spacing="5">
+                    <Label
+                        FontAttributes="Bold"
+                        WidthRequest="230"
+                        FontSize="18"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}">
+                        <Label.Text>
+                            <MultiBinding
+                                StringFormat="{}{0}. {1}">
+                                <Binding
+                                    Path="Order" />
+                                <Binding
+                                    Path="FullName" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Image
+                        WidthRequest="25"
+                        Source="organizer_sec.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=DeleteOrganizerCommand}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </HorizontalStackLayout>
+                <Label
+                    FontSize="16"
+                    WidthRequest="260"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{}{0}, wiek {1}, {2}">
+                            <Binding
+                                Path="Email" />
+                            <Binding
+                                Path="Age" />
+                            <Binding
+                                Path="City" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="NormalParticipant">
+            <VerticalStackLayout
+                HorizontalOptions="Center">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=UserDetailsCommand}"
+                        CommandParameter="{Binding .}">
+                    </TapGestureRecognizer>
+                </VerticalStackLayout.GestureRecognizers>
+                <HorizontalStackLayout
+                    Spacing="5">
+                    <Label
+                        FontAttributes="Bold"
+                        WidthRequest="230"
+                        FontSize="18"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}">
+                        <Label.Text>
+                            <MultiBinding
+                                StringFormat="{}{0}. {1}">
+                                <Binding
+                                    Path="Order" />
+                                <Binding
+                                    Path="FullName" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Image
+                        WidthRequest="25"
+                        Source="{AppThemeBinding Light=organizer_gray.png, Dark=organizer_dt.png}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=MakeOrganizerCommand}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </HorizontalStackLayout>
+                <Label
+                    FontSize="16"
+                    WidthRequest="260"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{}{0}, wiek {1}, {2}">
+                            <Binding
+                                Path="Email" />
+                            <Binding
+                                Path="Age" />
+                            <Binding
+                                Path="City" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <localTemplates:ParticipantDataTemplateSelector x:Key="ParticipantSelector"
+                                         MyPersonOrganizer="{StaticResource MyPersonOrganizer}"
+                                         MyPersonNormal="{StaticResource MyPersonNormal}"
+                                         OrganizerParticipant="{StaticResource OrganizerParticipant}"
+                                         NormalParticipant="{StaticResource NormalParticipant}" />
+    </ContentPage.Resources>
+
+
+    <StackLayout
+        Spacing="10">
+        <Grid
+            RowDefinitions="Auto"
+            ColumnDefinitions="30,*,30"
+            Margin="10,5,10,0">
+            <ImageButton
+                Grid.Column="0"
+                Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                Command="{Binding GoBackCommand}"
+                HeightRequest="30" />
+
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                FontSize="18"
+                Text="Uczestnicy wyjazdu"
+                VerticalOptions="Center" />
+        </Grid>
+
+        <Border
+            MaximumWidthRequest="350"
+            Padding="9,3,9,3"
+            StrokeThickness="0"
+            VerticalOptions="Center"
+            BackgroundColor="#F2F2F2"
+            StrokeShape="RoundRectangle 20,20,20,20">
+            <Grid
+                ColumnDefinitions="20, *, 20"
+                ColumnSpacing="5">
+                <Image
+                    Grid.Column="0"
+                    HeightRequest="20"
+                    WidthRequest="20"
+                    Source="search_gray.png">
+                </Image>
+                <Editor
+                    Grid.Column="1"
+                    MaxLength="100"
+                    Text="{Binding SearchPrompt}"
+                    Keyboard="Chat"
+                    MaximumHeightRequest="250"
+                    AutoSize="TextChanges"
+                    TextColor="#52AB98"
+                    Placeholder="Wyszukaj uczestnika"
+                    FontAttributes="Bold"
+                    FontSize="18">
+                    <Editor.Behaviors>
+                        <toolkit:EventToCommandBehavior
+                            EventName="TextChanged"
+                            Command="{Binding Source={x:Reference this}, Path=BindingContext.SearchingCommand}">
+                        </toolkit:EventToCommandBehavior>
+                    </Editor.Behaviors>
+                </Editor>
+                <Image
+                    Grid.Column="2"
+                    IsVisible="{Binding SearchPrompt.Length}"
+                    HeightRequest="25"
+                    WidthRequest="25"
+                    Source="x_gray.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=DeleteSearchingCommand}">
+                        </TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </Border>
+
+        <RefreshView
+            IsRefreshing="{Binding Refresh}"
+            Command="{Binding RefreshViewCommand}"
+            Margin="10,10,10,0">
+            <CollectionView
+                MaximumWidthRequest="500"
+                EmptyView="Brak uczestników do wyświetlenia"
+                ItemsSource="{Binding Participants}"
+                ItemTemplate="{StaticResource ParticipantSelector}"
+                SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Vertical"
+                        ItemSpacing="15" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.Footer>
+                    <ImageButton
+                        IsVisible="{Binding IsOrganizer}"
+                        HorizontalOptions="Center"
+                        HeightRequest="40"
+                        Command="{Binding AddCommand}"
+                        Source="{AppThemeBinding Light=plus_circle_pri.png, Dark=plus_circle_sec.png}" />
+                </CollectionView.Footer>
+            </CollectionView>
+        </RefreshView>
+
+        <!--<HorizontalStackLayout
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            Margin="0,0,10,10"
+            Spacing="10">
+            <HorizontalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParticipantsViewModel}}, Path=ExportCommand}">
+                </TapGestureRecognizer>
+            </HorizontalStackLayout.GestureRecognizers>
+            <Label
+                 FontSize="16"
+                 TextColor="{AppThemeBinding Light=#939393, Dark=white}"
+                 Text="Eksportuj listę do pdf"/>
+            <Image
+                 WidthRequest="25"
+                 Source="download_sec.png"/>
+        </HorizontalStackLayout>-->
+
+    </StackLayout>
+</ContentPage>

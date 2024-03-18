@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TripPlanner.Views.ShareViews.SharesListPage"
+             xmlns:localTemplates="clr-namespace:TripPlanner.DataTemplates"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:local="clr-namespace:TripPlanner.Converter"
+             xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Shares"
+             xmlns:model="clr-namespace:TripPlanner.Models.DTO.BillDTOs;assembly=TripPlanner.Models"
+             x:DataType="viewmodel:SharesViewModel"
+             x:Name="this"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+
+
+    <ContentPage.Resources>
+
+        <local:AbsConverter
+            x:Key="AbsConverter" />
+        
+        <DataTemplate x:Key="BillOwe" 
+                      x:DataType="model:SharePresentationDTO"> <!--rachunek gdzie wisze komus pieniadze-->
+            <HorizontalStackLayout
+                Spacing="5"
+                HorizontalOptions="Center">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SharesViewModel}}, Path=GoShareCommand}"
+                        CommandParameter="{Binding .}" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label
+                    VerticalOptions="Start"
+                    Text="{Binding CreatedDate, StringFormat='{}{0:dd.MM}'}"
+                    FontSize="14"
+                    MaxLines="2"
+                    MaximumWidthRequest="50"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Image
+                    VerticalOptions="Start"
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    Source="bill_sec.png">
+                </Image>
+                <VerticalStackLayout 
+                    Spacing="0">
+                    <Label
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                        Text="{Binding Name}"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Start"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        MaximumWidthRequest="230" />
+                    <Label
+                        TextColor="{AppThemeBinding Light=#939393, Dark=white}"
+                        Text="{Binding Description}"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Start"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        MaximumWidthRequest="230" />
+                </VerticalStackLayout>
+                <Label
+                    TextColor="#C96C45"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    MaximumWidthRequest="65">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{}{0} {1}zł">
+                            <Binding
+                                Source="Zalegasz" />
+                            <Binding
+                                Converter="{StaticResource AbsConverter}"
+                                Path="Value" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </HorizontalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="BillBorrowed"
+            x:DataType="model:SharePresentationDTO"> <!--rachunek gdzie pozyczyelm pieniadze-->
+            <HorizontalStackLayout
+                Spacing="5"
+                HorizontalOptions="Center">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SharesViewModel}}, Path=GoShareCommand}"
+                        CommandParameter="{Binding .}" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label
+                    VerticalOptions="Center"
+                    Text="{Binding CreatedDate, StringFormat='{}{0:dd.MM}'}"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}"
+                    FontSize="14"
+                    MaxLines="2"
+                    MaximumWidthRequest="37"/>
+                <Image
+                    VerticalOptions="Center"
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    Source="bill_sec.png">
+                </Image>
+                <VerticalStackLayout
+                    Spacing="0">
+                    <Label
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                        Text="{Binding Name}"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Start"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        MaximumWidthRequest="215" />
+                    <Label
+                        TextColor="{AppThemeBinding Light=#939393, Dark=white}"
+                        Text="{Binding Description}"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Start"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        MaximumWidthRequest="215" />
+                </VerticalStackLayout>
+                <Label
+                    TextColor="#52AB98"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    MaximumWidthRequest="80">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{}{0} {1}zł">
+                            <Binding
+                                Source="Pożyczasz" />
+                            <Binding Converter="{StaticResource AbsConverter}"
+                                Path="Value" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </HorizontalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="BillNotInvolved"
+            x:DataType="model:SharePresentationDTO"> <!--rachunek gdzie nie uczestnicze-->
+            <HorizontalStackLayout
+                Spacing="5"
+                HorizontalOptions="Center">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SharesViewModel}}, Path=GoShareCommand}"
+                        CommandParameter="{Binding .}" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label
+                    Text="{Binding CreatedDate, StringFormat='{}{0:dd.MM}'}"
+                    FontSize="16"
+                    MaxLines="2"
+                    MaximumWidthRequest="40"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Image
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    Source="bill_sec.png">
+                </Image>
+                <VerticalStackLayout
+                    Spacing="0">
+                    <Label
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                        Text="{Binding Name}"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Start"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        MaximumWidthRequest="200" />
+                    <Label
+                        TextColor="{AppThemeBinding Light=#939393, Dark=white}"
+                        Text="{Binding Description}"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HorizontalTextAlignment="Start"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        MaximumWidthRequest="200" />
+                </VerticalStackLayout>
+                <Label
+                    TextColor="#939393"
+                    Text="Bierny"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    MaximumWidthRequest="51" />
+            </HorizontalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Transfer" x:DataType="model:SharePresentationDTO">
+            <HorizontalStackLayout
+                Spacing="5"
+                HorizontalOptions="Start">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SharesViewModel}}, Path=GoShareCommand}"
+                        CommandParameter="{Binding .}" />
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label
+                    Text="{Binding CreatedDate, StringFormat='{}{0:dd.MM}'}"
+                    FontSize="14"
+                    MaxLines="2"
+                    VerticalOptions="Center"
+                    MaximumWidthRequest="40"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Image
+                    VerticalOptions="Center"
+                    WidthRequest="25"
+                    HeightRequest="25"
+                    Source="money_coin_sec.png">
+                </Image>
+                <Label
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}"
+                    Text="{Binding Name}"
+                    FontSize="16"
+                    WidthRequest="300"
+                    HorizontalTextAlignment="Start"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </DataTemplate>
+
+        <localTemplates:ShareDataTemplateSelector
+            x:Key="ShareSelector"
+            Transfer="{StaticResource Transfer}"
+            BillNotInvolved="{StaticResource BillNotInvolved}"
+            BillBorrowed="{StaticResource BillBorrowed}"
+            BillOwe="{StaticResource BillOwe}" />
+    </ContentPage.Resources>
+
+
+    <StackLayout
+        Orientation="Vertical"
+        Spacing="10">
+        <Grid
+            RowDefinitions="Auto"
+            ColumnDefinitions="30,*,30"
+            Margin="10,5,10,0">
+            <ImageButton
+                Grid.Column="0"
+                Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                Command="{Binding GoBackCommand}"
+                HeightRequest="30" />
+
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                FontSize="18"
+                VerticalOptions="Center">
+                <Label.Text>
+                    <MultiBinding
+                        StringFormat="{}{0}">
+                        <Binding
+                            Source="Rachunki" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+        </Grid>
+
+        <HorizontalStackLayout
+            Margin="10,0,10,0"
+            Spacing="10">
+            <Border
+                StrokeShape="RoundRectangle 25,25,25,25"
+                Padding="15,5,15,5"
+                StrokeThickness="1"
+                BackgroundColor="Transparent"
+                Stroke="{StaticResource Secondary}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SharesViewModel}}, Path=GoBalanceCommand}">
+                    </TapGestureRecognizer>
+                </Border.GestureRecognizers>
+                <Label
+                    BackgroundColor="Transparent"
+                    Text="Bilans"
+                    TextColor="{StaticResource Secondary}"
+                    FontAttributes="Bold"
+                    FontSize="18">
+                </Label>
+            </Border>
+            <Border
+                StrokeShape="RoundRectangle 25,25,25,25"
+                Padding="15,5,15,5"
+                StrokeThickness="1"
+                BackgroundColor="Transparent"
+                Stroke="{StaticResource Secondary}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SharesViewModel}}, Path=GoSettleCommand}">
+                    </TapGestureRecognizer>
+                </Border.GestureRecognizers>
+                <Label
+                    BackgroundColor="Transparent"
+                    Text="Rozlicz się"
+                    TextColor="{StaticResource Secondary}"
+                    FontAttributes="Bold"
+                    FontSize="18">
+                </Label>
+            </Border>
+            <!--<Border
+                StrokeShape="RoundRectangle 25,25,25,25"
+                Padding="15,5,15,5"
+                StrokeThickness="1"
+                BackgroundColor="Transparent"
+                Stroke="{StaticResource Secondary}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SharesViewModel}}, Path=ExportCommand}">
+                    </TapGestureRecognizer>
+                </Border.GestureRecognizers>
+                <Label
+                    BackgroundColor="Transparent"
+                    Text="Exportuj"
+                    TextColor="{StaticResource Secondary}"
+                    FontAttributes="Bold"
+                    FontSize="18">
+                </Label>
+            </Border>-->
+        </HorizontalStackLayout>
+        
+        <Border
+            MaximumWidthRequest="350"
+            Padding="9,3,9,3"
+            StrokeThickness="0"
+            VerticalOptions="Center"
+            BackgroundColor="#F2F2F2"
+            StrokeShape="RoundRectangle 20,20,20,20">
+            <Grid
+                ColumnDefinitions="20, *, 20"
+                ColumnSpacing="5">
+                <Image
+                    Grid.Column="0"
+                    HeightRequest="20"
+                    WidthRequest="20"
+                    Source="search_gray.png">
+                </Image>
+                <Editor
+                    Grid.Column="1"
+                    MaxLength="100"
+                    Text="{Binding SearchPrompt}"
+                    Keyboard="Chat"
+                    MaximumHeightRequest="250"
+                    AutoSize="TextChanges"
+                    TextColor="#52AB98"
+                    Placeholder="Wyszukaj rachunek"
+                    FontAttributes="Bold"
+                    FontSize="18">
+                    <Editor.Behaviors>
+                        <toolkit:EventToCommandBehavior
+                            EventName="TextChanged"
+                            Command="{Binding Source={x:Reference this}, Path=BindingContext.SearchingCommand}">
+                        </toolkit:EventToCommandBehavior>
+                    </Editor.Behaviors>
+                </Editor>
+                <Image
+                    Grid.Column="2"
+                    IsVisible="{Binding SearchPrompt.Length}"
+                    HeightRequest="25"
+                    WidthRequest="25"
+                    Source="x_gray.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SharesViewModel}}, Path=DeleteSearchingCommand}">
+                        </TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+        </Border>
+
+        <RefreshView
+            IsRefreshing="{Binding Refresh}"
+            Command="{Binding RefreshViewCommand}"
+            Margin="10,10,10,0">
+            <CollectionView
+                EmptyView="Brak rachunków i transakcji do wyświetlenia"
+                ItemsSource="{Binding Shares}"
+                ItemTemplate="{StaticResource ShareSelector}"
+                SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Vertical"
+                        ItemSpacing="20" />
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </RefreshView>
+
+        <HorizontalStackLayout
+            HorizontalOptions="End"
+            Margin="0,0,10,30"
+            Spacing="10">
+            <Border
+                StrokeShape="RoundRectangle 25,25,25,25"
+                Padding="20,5,20,5"
+                StrokeThickness="1"
+                BackgroundColor="Transparent"
+                Stroke="{StaticResource Secondary}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SharesViewModel}}, Path=AddBillCommand}">
+                    </TapGestureRecognizer>
+                </Border.GestureRecognizers>
+                <Label
+                    BackgroundColor="Transparent"
+                    Text="Dodaj rachunek"
+                    TextColor="{StaticResource Secondary}"
+                    FontAttributes="Bold"
+                    FontSize="18">
+                </Label>
+            </Border>
+        </HorizontalStackLayout>
+    </StackLayout>
+</ContentPage>

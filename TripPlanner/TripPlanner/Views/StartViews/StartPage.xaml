@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="TripPlanner.Views.StartViews.StartPage"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <ScrollView>
+        <Grid
+            RowSpacing="30"
+            RowDefinitions="Auto,Auto,Auto,Auto,*,Auto">
+            <Border
+                Grid.Row="0"
+                StrokeShape="RoundRectangle 40,40,40,40"
+                Background="{StaticResource Primary}"
+                WidthRequest="200"
+                HeightRequest="200"
+                Margin="0,50,0,0"
+                HorizontalOptions="Center">
+                <Label
+                    Padding="10"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Text="TripPlanner"></Label>
+            </Border>
+
+            <Label
+                Grid.Row="1"
+                WidthRequest="260"
+                FontSize="20"
+                FontAttributes="Bold"
+                TextColor="#939393"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Organizuj świetne wyjazd z najlepszymi przyjaciółmi"></Label>
+
+            <Button
+                Grid.Row="2"
+                Clicked="GoLogin"
+                WidthRequest="150"
+                FontSize="20"
+                TextColor="White"
+                BackgroundColor="{StaticResource Primary}"
+                CornerRadius="20"
+                HorizontalOptions="Center"
+                Text="Zaloguj">
+            </Button>
+
+            <Button
+                Grid.Row="3"
+                WidthRequest="150"
+                Clicked="GoRegister"
+                FontSize="20"
+                TextColor="White"
+                BackgroundColor="{StaticResource Primary}"
+                CornerRadius="20"
+                HorizontalOptions="Center"
+                Text="Zarejestruj">
+            </Button>
+
+            <Label
+                Grid.Row="5"
+                Margin="0,0,0,10"
+                WidthRequest="350"
+                FontSize="16"
+                FontAttributes="Bold"
+                TextColor="#939393"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Korzystając z “TripPlanner” akceptujesz politykę prywatności i zasady serwisu">
+            </Label>
+        </Grid>
+    </ScrollView>
+</ContentPage>

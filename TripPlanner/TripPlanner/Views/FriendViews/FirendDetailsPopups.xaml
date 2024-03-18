@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="TripPlanner.Views.HomeViews.FirendDetailsPopups"
+    xmlns:model="clr-namespace:TripPlanner.Models.DTO.UserDTOs;assembly=TripPlanner.Models"
+    xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Friend"
+    Color="Transparent"
+    x:DataType="model:ExtendFriendDTO"
+    CanBeDismissedByTappingOutsideOfPopup="True">
+    
+    <Border
+        WidthRequest="360"
+        Stroke="{AppThemeBinding Light=#939393, Dark={StaticResource Secondary}}"
+        Padding="20,20,20,80"
+        StrokeShape="RoundRectangle 20,20,20,20"
+        BackgroundColor="{AppThemeBinding Light=white, Dark=black}">
+        <VerticalStackLayout
+            Spacing="30">
+            <Grid
+                RowDefinitions="30,*">
+                <ImageButton
+                    Grid.Row="0"
+                    HorizontalOptions="Start"
+                    HeightRequest="30"
+                    Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                    Clicked="GoBack" />
+                <Label
+                    Grid.Row="1"
+                    HorizontalOptions="Center"
+                    FontAttributes="Bold"
+                    x:Name="Name"
+                    FontSize="20"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}" />
+            </Grid>
+            <Image
+                WidthRequest="90"
+                HeightRequest="90"
+                HorizontalOptions="Center"
+                Source="person_circle_sec.png" />
+            <VerticalStackLayout
+                Spacing="10">
+                <HorizontalStackLayout Spacing="10">
+                    <Label
+                        FontSize="17"
+                        x:Name="Telfon"
+                        TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                    <ImageButton
+                        Grid.Column="1"
+                        HeightRequest="20"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=CopyToClipboardCommand}"
+                        CommandParameter="{Binding Source={x:Reference Tel}, Path=Text}"
+                        Source="copy_sec.png" />
+                </HorizontalStackLayout>
+                <Label
+                    FontSize="17"
+                    x:Name="Email"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Label
+                    FontSize="17"
+                    x:Name="City"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Label
+                    FontSize="17"
+                    x:Name="BirthDate"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+                <Label
+                    FontSize="17"
+                    x:Name="Age"
+                    TextColor="{AppThemeBinding Light=#939393, Dark=white}" />
+            </VerticalStackLayout>
+            <Button
+                Margin="0,10,0,0"
+                Padding="10,5,10,5"
+                x:Name="DeleteButton"
+                CornerRadius="20"
+                BackgroundColor="{StaticResource Secondary}"
+                TextColor="white"
+                FontSize="18"
+                Text="Usuń ze znajomych"
+                FontAttributes="Bold">
+                <Button.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FriendsViewModel}}, Path=DeleteFriendCommand}"
+                        CommandParameter="{Binding Source={x:Reference Id}, Path=Text}" />
+                </Button.GestureRecognizers>
+            </Button>
+            <Label
+                IsVisible="False"
+                FontSize="0"
+                x:Name="Id" />
+            <Label
+                IsVisible="False"
+                FontSize="0"
+                x:Name="Tel" />
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

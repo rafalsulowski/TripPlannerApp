@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:models="clr-namespace:TripPlanner.Models.DTO.TourDTOs;assembly=TripPlanner.Models"
+             x:Class="TripPlanner.Views.HomeViews.HomePage"
+             xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Home"
+             x:DataType="viewmodel:HomeViewModel"
+             xmlns:ext="clr-namespace:TripPlanner.Extension"
+             Shell.NavBarIsVisible="False">
+    
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior
+            Command="{Binding AppearingCommand}"
+            EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <ScrollView>
+        <StackLayout
+            Spacing="10"
+            Orientation="Vertical">
+            <Grid
+                HeightRequest="30"
+                ColumnDefinitions="30,*,30"
+                Margin="10,5,10,0">
+                <!--<ImageButton
+                    Grid.Column="0"
+                    Source="{AppThemeBinding Light=calendar_wt.png, Dark=calendar_dt.png}"
+                    WidthRequest="30"
+                    Command="{Binding OpenCalendarCommand}" />-->
+
+                <Label
+                    Grid.Column="1"
+                    FontSize="18"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Text="TripPlanner" />
+
+                <ImageButton
+                    Grid.Column="2"
+                    Source="{AppThemeBinding Light=plus_wt.png, Dark=plus_dt.png}"
+                    WidthRequest="30"
+                    Command="{Binding CreateTripCommand}" />
+            </Grid>
+
+            <Label
+                FontSize="16"
+                Text="Natchodzące wyjazdy"
+                TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"
+                HorizontalOptions="Center"
+                FontAttributes="Bold" />
+
+            <RefreshView
+                IsRefreshing="{Binding Refresh}"
+                Command="{Binding RefreshViewCommand}">
+                <CollectionView
+                    MaximumWidthRequest="500"
+                    ItemsSource="{Binding Tours}"
+                    SelectionMode="None">
+                    <CollectionView.EmptyView>
+                        <StackLayout 
+                            Orientation="Vertical"
+                            Margin="0,30,0,0"
+                            Spacing="20">
+                            <Border
+                                HorizontalOptions="Center"
+                                WidthRequest="250"
+                                HeightRequest="100"
+                                BackgroundColor="#90D5C6"
+                                Padding="20"
+                                StrokeShape="RoundRectangle 10,10,10,10">
+                                <VerticalStackLayout
+                                    Spacing="10">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Center"
+                                        Text="Brak zaplanowanych wyjazdów"
+                                        FontSize="14" />
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Text="Zaplanuj wyjazd teraz!"
+                                        FontSize="14" />
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <Button
+                                TextColor="{StaticResource Secondary}"
+                                Text="Stwórz nowy wyjazd"
+                                BorderColor="{StaticResource Secondary}"
+                                BackgroundColor="White"
+                                BorderWidth="2"
+                                CornerRadius="20"
+                                WidthRequest="200"
+                                HeightRequest="60"
+                                FontSize="16"
+                                FontAttributes="Bold"
+                                Command="{Binding CreateTripCommand}">
+                            </Button>
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Vertical"
+                            ItemSpacing="16" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="models:TourDTO">
+
+                            <Border
+                                HorizontalOptions="Center"
+                                StrokeShape="RoundRectangle 10,10,10,10"
+                                BackgroundColor="{AppThemeBinding Light=#F1F1F1, Dark=#E1E1E1}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeViewModel}}, Path=ShowTourCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <Grid
+                                    ColumnSpacing="5"
+                                    HorizontalOptions="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ext:OnOrientation>
+                                            <ext:OnOrientation.Default>
+                                                <ColumnDefinitionCollection>
+                                                    <ColumnDefinition
+                                                        Width="100" />
+                                                    <ColumnDefinition
+                                                        Width="190" />
+                                                </ColumnDefinitionCollection>
+                                            </ext:OnOrientation.Default>
+                                            <ext:OnOrientation.Landscape>
+                                                <ColumnDefinitionCollection>
+                                                    <ColumnDefinition
+                                                        Width="100" />
+                                                    <ColumnDefinition
+                                                        Width="290" />
+                                                </ColumnDefinitionCollection>
+                                            </ext:OnOrientation.Landscape>
+                                        </ext:OnOrientation>
+                                    </Grid.ColumnDefinitions>
+                                    <Border
+                                        Grid.Column="{ext:OnOrientation Default=0, Portrait=0, Landscape=0}"
+                                        Grid.Row="{ext:OnOrientation Default=0, Portrait=0, Landscape=0}"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 10,10,10,10">
+                                        <Image
+                                            Source="TourIcon/pic1.jpg"
+                                            WidthRequest="100"
+                                            HeightRequest="100"
+                                            Aspect="Fill">
+                                        </Image>
+                                    </Border>
+
+                                    <Label
+                                        Grid.Column="{ext:OnOrientation Default=1, Portrait=1, Landscape=1}"
+                                        Grid.Row="{ext:OnOrientation Default=0, Portrait=0, Landscape=0}"
+                                        VerticalOptions="Start"
+                                        FontSize="16"
+                                        AbsoluteLayout.LayoutBounds="105,5,AutoSize,AutoSize"
+                                        HorizontalOptions="Start"
+                                        MaximumWidthRequest="180"
+                                        FontAttributes="Bold"
+                                        TextColor="#52AB98"
+                                        Margin="0,5,0,0"
+                                        Text="{Binding Title}"
+                                        LineBreakMode="WordWrap" />
+                                    <Label
+                                        VerticalOptions="End"
+                                        Grid.Column="1"
+                                        FontSize="15"
+                                        TextColor="#52AB98"
+                                        FontAttributes="Bold"
+                                        Margin="0,0,10,5"
+                                        AbsoluteLayout.LayoutFlags="XProportional"
+                                        AbsoluteLayout.LayoutBounds="1,80,AutoSize,AutoSize"
+                                        HorizontalOptions="End">
+                                        <Label.Text>
+                                            <MultiBinding
+                                                StringFormat="{}{0:dd.MM.yyyy} - {1:dd.MM.yyyy}">
+                                                <Binding
+                                                    Path="StartDate" />
+                                                <Binding
+                                                    Path="EndDate" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

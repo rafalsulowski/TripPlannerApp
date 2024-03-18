@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.CheckListViews.CheckListsPage"
+            xmlns:localTemplates="clr-namespace:TripPlanner.DataTemplates"
+            xmlns:local="clr-namespace:TripPlanner.Converter"
+            xmlns:model="clr-namespace:TripPlanner.Models.DTO.CheckListDTOs;assembly=TripPlanner.Models"
+            xmlns:model2="clr-namespace:TripPlanner.Models.DTO.MessageDTOs.QuestionnaireDTOs;assembly=TripPlanner.Models"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.CheckList"
+            x:DataType="viewmodel:CheckListsViewModel"
+            Shell.TabBarIsVisible="False"
+            Shell.NavBarIsVisible="False">
+
+    
+    <ContentPage.Resources>
+        <DataTemplate x:Key="CheckLists" x:DataType="viewmodel:CheckListView">
+            <VerticalStackLayout>
+                <CollectionView
+                    EmptyView="Brak checkList do wyświetlenia"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    ItemsSource="{Binding Groups}"
+                    IsGrouped="True">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Vertical"
+                            ItemSpacing="10">
+                        </LinearItemsLayout>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.GroupHeaderTemplate>
+                        <DataTemplate
+                            x:DataType="viewmodel:CheckListGroup">
+                            <Border
+                                HeightRequest="60"
+                                StrokeShape="RoundRectangle 20,20,0,0"
+                                HorizontalOptions="FillAndExpand"
+                                BackgroundColor="{StaticResource Secondary}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CheckListsViewModel}}, Path=AddOrRemoveGroupDataCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <Grid
+                                    Margin="10,0,10,0"
+                                    ColumnDefinitions="*,Auto, *, 25">
+
+                                    <HorizontalStackLayout
+                                        Grid.Column="1">
+                                        <Label
+                                            VerticalOptions="Center"
+                                            TextColor="white"
+                                            FontSize="20"
+                                            HorizontalOptions="Center"
+                                            FontAttributes="Bold"
+                                            Text="{Binding Name}">
+                                        </Label>
+                                        <Image
+                                            Margin="10,0,0,0"
+                                            Source="{Binding GroupIcon}"
+                                            VerticalOptions="Center"
+                                            HeightRequest="25"
+                                            WidthRequest="25">
+                                        </Image>
+                                    </HorizontalStackLayout>
+                                    <Image
+                                        Grid.Column="3"
+                                        HorizontalOptions="End"
+                                        WidthRequest="25"
+                                        HeightRequest="25"
+                                        Source="plus_circle_dt.png">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CheckListsViewModel}}, Path=AddCheckListCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.GroupHeaderTemplate>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model:CheckListDTO">
+                            <HorizontalStackLayout
+                                Spacing="15"
+                                Margin="20,0,20,0">
+                                <HorizontalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CheckListsViewModel}}, Path=GoCheckListCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </HorizontalStackLayout.GestureRecognizers>
+                                <Image
+                                    HeightRequest="20"
+                                    WidthRequest="20"
+                                    Source="arrow_right_sec.png">
+                                </Image>
+                                <Label
+                                    MaximumWidthRequest="300"
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Name}">
+                                </Label>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Questionnaires"
+            x:DataType="viewmodel:CheckListView">
+            <VerticalStackLayout>
+                <CollectionView
+                    EmptyView="Brak ankiet do wyświetlenia"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    ItemsSource="{Binding Questionnaires}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Vertical"
+                            ItemSpacing="15">
+                        </LinearItemsLayout>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.Header>
+                        <Border
+                            HeightRequest="60"
+                            StrokeShape="RoundRectangle 20,20,0,0"
+                            BackgroundColor="{StaticResource Secondary}">
+                            <Grid
+                                Margin="10,0,10,0"
+                                ColumnDefinitions="*,Auto, *, 25">
+
+                                <Label
+                                    Grid.Column="1"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    TextColor="white"
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Name}">
+                                </Label>
+
+                                <Image
+                                    Grid.Column="3"
+                                    HorizontalOptions="End"
+                                    WidthRequest="25"
+                                    HeightRequest="25"
+                                    Source="plus_circle_dt.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CheckListsViewModel}}, Path=AddQuestionnaireCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+                        </Border>
+                    </CollectionView.Header>
+                
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate
+                            x:DataType="model2:QuestionnaireDTO">
+                            <HorizontalStackLayout
+                                Spacing="10"
+                                Margin="20,0,20,0">
+                                <HorizontalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CheckListsViewModel}}, Path=GoQuestionnaireCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </HorizontalStackLayout.GestureRecognizers>
+                                <Image
+                                    HeightRequest="20"
+                                    WidthRequest="20"
+                                    Source="arrow_right_sec.png">
+                                </Image>
+                                <Label
+                                    MaximumWidthRequest="300"
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Content}">
+                                </Label>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </DataTemplate>
+
+        <localTemplates:CheckListViewDataTemplateSelector
+            x:Key="CheckListViewSelector"
+            CheckLists="{StaticResource CheckLists }"
+            Questionnaires="{StaticResource Questionnaires }" />
+    </ContentPage.Resources>
+
+    <StackLayout
+        Orientation="Vertical"
+        Spacing="10">
+        <Grid
+            RowDefinitions="Auto"
+            ColumnDefinitions="30,*,30"
+            Margin="10,5,10,0">
+            <ImageButton
+                Grid.Column="0"
+                Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                Command="{Binding GoBackCommand}"
+                HeightRequest="30" />
+
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                FontSize="18"
+                VerticalOptions="Center"
+                Text="Checklisty i ankiety" />
+        </Grid>
+
+        <IndicatorView
+            HorizontalOptions="Center"
+            SelectedIndicatorColor="{StaticResource Secondary}"
+            x:Name="indicator"
+            Margin="0,20,0,0">
+        </IndicatorView>
+
+        <CarouselView
+            HorizontalOptions="Center"
+            IndicatorView="indicator"
+            HorizontalScrollBarVisibility="Never"
+            VerticalScrollBarVisibility="Never"
+            VerticalOptions="FillAndExpand"
+            CurrentItem="{Binding CurrentItem, Mode=TwoWay}"
+            ItemsSource="{Binding CheckListViews}"
+            Margin="0,20,0,0"
+            ItemTemplate="{StaticResource CheckListViewSelector}"
+            Loop="False">
+        </CarouselView>
+       
+    </StackLayout>
+</ContentPage>

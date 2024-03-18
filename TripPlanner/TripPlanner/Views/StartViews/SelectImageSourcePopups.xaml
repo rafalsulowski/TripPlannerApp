@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TripPlanner.Views.StartViews.SelectImageSourcePopups"
+            Color="Transparent"
+            CanBeDismissedByTappingOutsideOfPopup="True">
+    
+    <ScrollView>
+        <Border
+            WidthRequest="360"
+            Stroke="{AppThemeBinding Light=#939393, Dark={StaticResource Secondary}}"
+            Padding="20,20,20,80"
+            StrokeShape="RoundRectangle 20,20,20,20"
+            BackgroundColor="{AppThemeBinding Light=white, Dark=black}">
+            <VerticalStackLayout
+                Spacing="30">
+                <Grid
+                    RowDefinitions="30,*">
+                    <ImageButton
+                        Grid.Row="0"
+                        Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                        HorizontalOptions="Start"
+                        HeightRequest="30"
+                        Clicked="GoBack" />
+                </Grid>
+                <Label
+                    WidthRequest="300"
+                    HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center"
+                    FontAttributes="Bold"
+                    Text="Wybierz źródło obrazu"
+                    FontSize="20"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}" />
+                <Button
+                    Margin="0,10,0,0"
+                    Padding="10,5,10,5"
+                    Text="Zrób zdjęcie"
+                    CornerRadius="20"
+                    BackgroundColor="{StaticResource Secondary}"
+                    TextColor="white"
+                    FontSize="18"
+                    Clicked="DoPicture"
+                    FontAttributes="Bold">
+                </Button>
+                <Button
+                    Margin="0,10,0,0"
+                    Padding="10,5,10,5"
+                    Text="Wybierz z galerii"
+                    CornerRadius="20"
+                    BackgroundColor="{StaticResource Secondary}"
+                    TextColor="white"
+                    FontSize="18"
+                    Clicked="SelectFromGallery"
+                    FontAttributes="Bold">
+                </Button>
+            </VerticalStackLayout>
+        </Border>
+    </ScrollView>
+</toolkit:Popup>

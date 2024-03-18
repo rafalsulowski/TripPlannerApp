@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="TripPlanner.Views.HomeViews.ConfigurationPage"
+            xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Home"
+            x:DataType="viewmodel:ConfigurationViewModel"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            x:Name="this"
+            xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            Shell.TabBarIsVisible="False"
+            Shell.NavBarIsVisible="False">
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior
+            Command="{Binding AppearingCommand}"
+            EventName="Appearing" />
+    </ContentPage.Behaviors>
+    
+    <VerticalStackLayout>
+        <Grid
+            HeightRequest="30"
+            ColumnDefinitions="30,*,30"
+            Margin="10,5,10,0">
+            <ImageButton
+                Grid.Column="0"
+                Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                WidthRequest="30"
+                Command="{Binding GoBackCommand}" />
+
+            <Label
+                Grid.Column="1"
+                FontSize="18"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Text="Konfiguracja" />
+        </Grid>
+
+
+        <HorizontalStackLayout
+            Margin="0,50,0,0"
+            Spacing="10"
+            HorizontalOptions="Center">
+            <Label
+                FontAttributes="Bold"
+                FontSize="20"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                VerticalOptions="Center"
+                Text="Czy włączyć tryb ciemny?">
+            </Label>
+            <Switch
+                ThumbColor="#939393"
+                x:Name="sw"
+                IsToggled="{Binding IsChecked}"
+                OnColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}">
+                <Switch.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ConfigurationViewModel}}, Path=ChangeThemeCommand}">
+                    </TapGestureRecognizer>
+                </Switch.GestureRecognizers>
+                <!--<Switch.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="PropertyChanged"
+                        Command="{Binding Source={x:Reference this}, Path=BindingContext.ChangeThemeCommand}">
+                    </toolkit:EventToCommandBehavior>
+                </Switch.Behaviors>-->
+            </Switch>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

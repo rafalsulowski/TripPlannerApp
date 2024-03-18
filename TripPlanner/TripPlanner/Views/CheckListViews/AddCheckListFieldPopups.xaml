@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TripPlanner.Views.ChatViews.AddCheckListFieldPopups"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Color="Transparent" 
+             CanBeDismissedByTappingOutsideOfPopup="True">
+    
+    <Border
+            StrokeThickness="0"
+            VerticalOptions="Center"
+            BackgroundColor="{AppThemeBinding Light=white, Dark=black}"
+            StrokeShape="RoundRectangle 20,20,20,20">
+        <VerticalStackLayout
+                Margin="25"
+                Spacing="10"
+                WidthRequest="300"
+                VerticalOptions="CenterAndExpand">
+            <Label
+                FontSize="18"
+                FontAttributes="Bold"
+                TextColor="{AppThemeBinding Light={StaticResource Primary},Dark={StaticResource Secondary}}"
+                Margin="0,20,0,10"
+                HorizontalOptions="Center"
+                Text="Dodajesz nowy przedmiot"></Label>
+            <Border
+                    Padding="10"
+                    StrokeThickness="0"
+                    VerticalOptions="Center"
+                    BackgroundColor="#F2F2F2"
+                    StrokeShape="RoundRectangle 20,20,20,20">
+                <Editor
+                    MaxLength="150"
+                    x:Name="m_Answer"
+                    Keyboard="Chat"
+                    MinimumHeightRequest="35"
+                    MaximumHeightRequest="250"
+                    AutoSize="TextChanges"
+                    TextColor="#52AB98"
+                    Placeholder="przedmiot"
+                    FontAttributes="Bold"
+                    FontSize="18"/>
+            </Border>
+
+            <Border
+                Margin="0,10,0,0"
+                Padding="10"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                BackgroundColor="#F2F2F2"
+                StrokeShape="RoundRectangle 20,20,20,20">
+                <Editor
+                    MaxLength="150"
+                    x:Name="m_Multiplicity"
+                    Keyboard="Chat"
+                    MinimumHeightRequest="35"
+                    MaximumHeightRequest="250"
+                    AutoSize="TextChanges"
+                    TextColor="#52AB98"
+                    Placeholder="ilość"
+                    FontAttributes="Bold"
+                    FontSize="18" />
+            </Border>
+
+            <Button
+                Margin="0,10,0,0"
+                BackgroundColor="{StaticResource Primary}"
+                    Clicked="Submit_Clicked"
+                    TextColor="{AppThemeBinding Light=white, Dark=black}"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    WidthRequest="100"
+                    CornerRadius="15"
+                    HeightRequest="50"
+                    Text="Dodaj"/>
+        </VerticalStackLayout>
+    </Border>
+</toolkit:Popup>

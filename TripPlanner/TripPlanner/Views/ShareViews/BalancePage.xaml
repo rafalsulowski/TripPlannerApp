@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="TripPlanner.Views.ShareViews.BalancePage"
+    xmlns:local="clr-namespace:TripPlanner.Converter"
+    xmlns:localTemplates="clr-namespace:TripPlanner.DataTemplates"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodel="clr-namespace:TripPlanner.ViewModels.Shares"
+    xmlns:model="clr-namespace:TripPlanner.Models.DTO.TourDTOs;assembly=TripPlanner.Models"
+    xmlns:model2="clr-namespace:TripPlanner.Models.DTO.BillDTOs;assembly=TripPlanner.Models"
+    x:DataType="viewmodel:BalanceViewModel"
+    Shell.TabBarIsVisible="False"
+    Shell.NavBarIsVisible="False">
+
+
+    <ContentPage.Resources>
+
+        <local:AbsConverter
+            x:Key="AbsConverter" />
+        <local:SetDecimalPrecision2Converter
+            x:Key="DecimalPrecision" />
+        <local:CaretConverter
+            x:Key="CaretConverter" />
+
+
+        <DataTemplate
+            x:Key="OweOtherUser"
+            x:DataType="model2:OtherUser">
+            <!--uczestnik ogółem jest dłużny pieniądze-->
+            <Grid
+                HorizontalOptions="Center"
+                RowDefinitions="Auto, Auto"
+                RowSpacing="10"
+                Margin="30,0,0,0"
+                ColumnSpacing="10"
+                ColumnDefinitions="20, 300">
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    WidthRequest="20"
+                    HeightRequest="20"
+                    Source="person_circle_sec.png">
+                </Image>
+                <Label
+                    Grid.Row="0"
+                    MaximumWidthRequest="300"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    Grid.Column="1"
+                    TextType="Html">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{}Dłużny(a) ogółem &lt;span style=&quot;color:#C96C45&quot;&gt;{1}zł&lt;/span&gt; do {0}">
+                            <Binding
+                                Path="Name" />
+                            <Binding
+                                Path="Saldo"
+                                Converter="{StaticResource AbsConverter}" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <HorizontalStackLayout
+                    Spacing="10"
+                    Grid.Row="1"
+                    Grid.Column="1">
+                    <Border
+                        Margin="0,0,0,20"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 25,25,25,25"
+                        Padding="20,5,20,5"
+                        StrokeThickness="1"
+                        BackgroundColor="Transparent"
+                        Stroke="{StaticResource Secondary}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BalanceViewModel}}, Path=GoRemindCommand}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Border.GestureRecognizers>
+                        <Label
+                            BackgroundColor="Transparent"
+                            Text="Przypomnij"
+                            TextColor="{StaticResource Secondary}"
+                            FontAttributes="Bold"
+                            FontSize="17">
+                        </Label>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="0,0,0,20"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 25,25,25,25"
+                        Padding="20,5,20,5"
+                        StrokeThickness="1"
+                        BackgroundColor="Transparent"
+                        Stroke="{StaticResource Secondary}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BalanceViewModel}}, Path=GoSettleUpCommand}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Border.GestureRecognizers>
+                        <Label
+                            BackgroundColor="Transparent"
+                            Text="Rozlicz się"
+                            TextColor="{StaticResource Secondary}"
+                            FontAttributes="Bold"
+                            FontSize="17">
+                        </Label>
+                    </Border>
+                </HorizontalStackLayout>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate
+            x:Key="BorrowedOtherUser"
+            x:DataType="model2:OtherUser">
+            <!--ogółem uczestnik pożyczył pieniądze-->
+            <Grid
+                HorizontalOptions="Center"
+                RowDefinitions="Auto,Auto"
+                RowSpacing="10"
+                Margin="30,0,0,0"
+                ColumnSpacing="10"
+                ColumnDefinitions="20, 300">
+                <Image
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    WidthRequest="20"
+                    HeightRequest="20"
+                    Source="person_circle_sec.png">
+                </Image>
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    MaximumWidthRequest="300"
+                    FontSize="15"
+                    FontAttributes="Bold"
+                    TextType="Html">
+                    <Label.Text>
+                        <MultiBinding
+                            StringFormat="{} Pożyczył(a) ogółem &lt;span style=&quot;color:#52AB98&quot;&gt;{1}zł&lt;/span&gt; do {0}">
+                            <Binding
+                                Path="Name" />
+                            <Binding
+                                Path="Saldo"
+                                Converter="{StaticResource AbsConverter}" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <HorizontalStackLayout
+                    Spacing="10"
+                    Grid.Row="1"
+                    Grid.Column="1">
+                    <Border
+                        Margin="0,0,0,20"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 25,25,25,25"
+                        Padding="20,5,20,5"
+                        StrokeThickness="1"
+                        BackgroundColor="Transparent"
+                        Stroke="{StaticResource Secondary}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BalanceViewModel}}, Path=GoRemindCommand}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Border.GestureRecognizers>
+                        <Label
+                            BackgroundColor="Transparent"
+                            Text="Przypomnij"
+                            TextColor="{StaticResource Secondary}"
+                            FontAttributes="Bold"
+                            FontSize="17">
+                        </Label>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="0,0,0,20"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 25,25,25,25"
+                        Padding="20,5,20,5"
+                        StrokeThickness="1"
+                        BackgroundColor="Transparent"
+                        Stroke="{StaticResource Secondary}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BalanceViewModel}}, Path=GoSettleUpCommand}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Border.GestureRecognizers>
+                        <Label
+                            BackgroundColor="Transparent"
+                            Text="Rozlicz się"
+                            TextColor="{StaticResource Secondary}"
+                            FontAttributes="Bold"
+                            FontSize="18">
+                        </Label>
+                    </Border>
+                </HorizontalStackLayout>
+            </Grid>
+        </DataTemplate>
+
+        <localTemplates:OtherUserBalanceDataTemplateSelector
+            x:Key="OtherUserBalanceDataTemplateSelector"
+            OweOtherUser="{StaticResource OweOtherUser}"
+            BorrowedOtherUser="{StaticResource BorrowedOtherUser}" />
+
+        <DataTemplate
+            x:Key="Owe"
+            x:DataType="model2:UserBalance">
+            <!--uczestnik ogółem jest dłużny pieniądze-->
+            <VerticalStackLayout>
+                <Grid
+                    WidthRequest="365"
+                    HorizontalOptions="Start"
+                    Margin="0,0,0,10"
+                    ColumnDefinitions="25, *, 25"
+                    ColumnSpacing="10">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BalanceViewModel}}, Path=ChangeExpandListCommand}"
+                            CommandParameter="{Binding .}">
+                        </TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Image
+                        HorizontalOptions="Start"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        Source="person_circle_sec.png"
+                        HeightRequest="25"
+                        WidthRequest="25" />
+                    <Label
+                        HorizontalOptions="Start"
+                        Grid.Column="1"
+                        LineBreakMode="CharacterWrap"
+                        MaximumWidthRequest="280"
+                        TextType="Html"
+                        FontAttributes="Bold"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                        FontSize="17">
+                        <Label.Text>
+                            <MultiBinding
+                                StringFormat="{}{0} dłużny(a) ogółem &lt;span style=&quot;color:#C96C45&quot;&gt;{1}&lt;/strong&gt;zł">
+                                <Binding
+                                    Path="Name" />
+                                <Binding
+                                    Path="Saldo"
+                                    Converter="{StaticResource DecimalPrecision}" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Image
+                        HorizontalOptions="End"
+                        Grid.Column="2"
+                        VerticalOptions="Start"
+                        Source="{Binding IsExpand, Converter={StaticResource CaretConverter}}"
+                        HeightRequest="25"
+                        WidthRequest="25">
+                    </Image>
+                </Grid>
+                <toolkit:Expander
+                    IsExpanded="{Binding IsExpand}">
+                    <CollectionView
+                        ItemTemplate="{StaticResource OtherUserBalanceDataTemplateSelector}"
+                        ItemsSource="{Binding BalanceWithOtherUsers}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout
+                                Orientation="Vertical"
+                                ItemSpacing="0" />
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
+                </toolkit:Expander>
+            </VerticalStackLayout>
+
+        </DataTemplate>
+
+        <DataTemplate
+            x:Key="Borrowed"
+            x:DataType="model2:UserBalance">
+            <!--ogółem uczestnik pożyczył pieniądze-->
+            <VerticalStackLayout>
+                <Grid
+                    WidthRequest="365"
+                    HorizontalOptions="Start"
+                    Margin="0,0,0,10"
+                    ColumnDefinitions="25, *, 25"
+                    ColumnSpacing="10">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BalanceViewModel}}, Path=ChangeExpandListCommand}"
+                            CommandParameter="{Binding .}">
+                        </TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Image
+                        HorizontalOptions="Start"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        Source="person_circle_sec.png"
+                        HeightRequest="25"
+                        WidthRequest="25" />
+                    <Label
+                        HorizontalOptions="Start"
+                        Grid.Column="1"
+                        LineBreakMode="CharacterWrap"
+                        MaximumWidthRequest="280"
+                        TextType="Html"
+                        FontAttributes="Bold"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                        FontSize="17">
+                        <Label.Text>
+                            <MultiBinding
+                                StringFormat="{}{0} porzyczył(a) ogółem &lt;span style=&quot;color:#52AB98&quot;&gt;{1}&lt;/strong&gt;zł">
+                                <Binding
+                                    Path="Name" />
+                                <Binding
+                                    Path="Saldo"
+                                    Converter="{StaticResource AbsConverter}" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                    <Image
+                        HorizontalOptions="End"
+                        Grid.Column="2"
+                        VerticalOptions="Center"
+                        Source="{Binding IsExpand, Converter={StaticResource CaretConverter}}"
+                        HeightRequest="25"
+                        WidthRequest="25">
+                    </Image>
+                </Grid>
+                <toolkit:Expander
+                    IsExpanded="{Binding IsExpand}">
+                    <CollectionView
+                        ItemTemplate="{StaticResource OtherUserBalanceDataTemplateSelector}"
+                        ItemsSource="{Binding BalanceWithOtherUsers}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout
+                                Orientation="Vertical"
+                                ItemSpacing="0" />
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
+                </toolkit:Expander>
+            </VerticalStackLayout>
+
+        </DataTemplate>
+
+        <DataTemplate
+            x:Key="NotInvolved"
+            x:DataType="model2:UserBalance">
+            <!--uczestnik jest już rozliczony-->
+            <VerticalStackLayout>
+                <Grid
+                    WidthRequest="365"
+                    HorizontalOptions="Start"
+                    Margin="0,0,0,10"
+                    ColumnDefinitions="25, *, 25"
+                    ColumnSpacing="10">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BalanceViewModel}}, Path=ChangeExpandListCommand}"
+                            CommandParameter="{Binding .}">
+                        </TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Image
+                        HorizontalOptions="Start"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        Source="person_circle_sec.png"
+                        HeightRequest="25"
+                        WidthRequest="25" />
+                    <Label
+                        HorizontalOptions="Start"
+                        Grid.Column="1"
+                        LineBreakMode="CharacterWrap"
+                        MaximumWidthRequest="280"
+                        TextType="Html"
+                        FontAttributes="Bold"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+                        FontSize="17">
+                        <Label.Text>
+                            <MultiBinding
+                                StringFormat="{}{0} rozliczony(a)">
+                                <Binding
+                                    Path="Name" />
+                                <Binding
+                                    Path="Saldo"
+                                    Converter="{StaticResource DecimalPrecision}" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                </Grid>
+            </VerticalStackLayout>
+
+        </DataTemplate>
+
+        <localTemplates:BalanceDataTemplateSelector
+            x:Key="BalanceSelector"
+            Owe="{StaticResource Owe}"
+            Borrowed="{StaticResource Borrowed}"
+            NotInvolved="{StaticResource NotInvolved}" />
+    </ContentPage.Resources>
+
+    
+    
+    <StackLayout
+        Orientation="Vertical"
+        Spacing="10">
+
+        <Grid
+            RowDefinitions="Auto"
+            ColumnDefinitions="30,*,30"
+            Margin="10,5,10,0">
+            <ImageButton
+                Grid.Column="0"
+                Source="{AppThemeBinding Light=arrow_back_wt.png, Dark=arrow_back_dt.png}"
+                Command="{Binding GoBackCommand}"
+                HeightRequest="30" />
+
+            <Label
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                FontSize="18"
+                VerticalOptions="Center">
+                <Label.Text>
+                    <MultiBinding
+                        StringFormat="{}{0}">
+                        <Binding
+                            Source="Bilans" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+        </Grid>
+
+        <Label
+            Margin="0,20,0,0"
+            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Secondary}}"
+            HorizontalOptions="Center"
+            FontSize="17"
+            FontAttributes="Bold">
+            <Label.Text>
+                <MultiBinding
+                    StringFormat="{}Całkowite wydatki podczas wyjazdu: {0}zł">
+                    <Binding
+                        Path="Balance.TotalBalance"
+                        Converter="{StaticResource DecimalPrecision}" />
+                </MultiBinding>
+            </Label.Text>
+        </Label>
+
+        <RefreshView
+            IsRefreshing="{Binding Refresh}"
+            Command="{Binding RefreshViewCommand}"
+            Margin="15,10,10,0">
+            <CollectionView
+                EmptyView="Bilans wyrównany :), brak uczestników powiązanych rachunkami"
+                ItemsSource="{Binding Balance.UserBalances}"
+                ItemTemplate="{StaticResource BalanceSelector}"
+                SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Vertical"
+                        ItemSpacing="20" />
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </RefreshView>
+
+        <Border
+            Margin="0,0,0,20"
+            HorizontalOptions="Center"
+            StrokeShape="RoundRectangle 25,25,25,25"
+            Padding="20,5,20,5"
+            StrokeThickness="1"
+            BackgroundColor="Transparent"
+            Stroke="{StaticResource Secondary}">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BalanceViewModel}}, Path=GoSettleUpClearCommand}">
+                </TapGestureRecognizer>
+            </Border.GestureRecognizers>
+            <Label
+                BackgroundColor="Transparent"
+                Text="Rozlicz się"
+                TextColor="{StaticResource Secondary}"
+                FontAttributes="Bold"
+                FontSize="18">
+            </Label>
+        </Border>
+    </StackLayout>
+</ContentPage>
