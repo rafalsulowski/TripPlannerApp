@@ -5,13 +5,11 @@
 <h2>Project Screenshots:</h2>
 
 Login view (Windows):
-![Alt text](https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/ddd69c5b-e1b7-494f-a17d-77c711c6a908)
+<img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/ddd69c5b-e1b7-494f-a17d-77c711c6a908" width="350">
 
 Main page view, after sign in (Android)
-![Alt text](https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/bd77d00b-1813-4d6c-a17b-0862338272e1)
+<img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/bd77d00b-1813-4d6c-a17b-0862338272e1" width="350">
 
-<img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/bd77d00b-1813-4d6c-a17b-0862338272e1" width="350" title="hover text">
-![Alt text]()
 
 ![Alt text]()
 
