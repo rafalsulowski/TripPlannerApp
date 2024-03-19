@@ -20,7 +20,7 @@ Adding bill, dark theme (Windows): </br>
 <img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/ce1789fb-7168-4ea4-b67e-2d2c6ef84574" width="480" height="290">
 
 Creating trip, orientation horizontal (Android): </br>
-<img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/179ae3af-ff5b-41c4-8ab9-dfef77ac49d6" width="360" height="780">
+<img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/179ae3af-ff5b-41c4-8ab9-dfef77ac49d6" width="780" height="360">
 
 Main page view, after sign in (Android) </br>
 <img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/bd77d00b-1813-4d6c-a17b-0862338272e1" width="360" height="780">
