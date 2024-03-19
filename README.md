@@ -4,7 +4,7 @@
 
 <h2>Project Screenshots:</h2>
 
-![Alt text]"https://github.com/rafalsulowski/TripPlannerApp/tree/main/TripPlanner/TripPlanner/rysunki/zdj15.png")
+![Alt text]("https://github.com/rafalsulowski/TripPlannerApp/tree/main/TripPlanner/TripPlanner/rysunki/zdj15.png")
 
 ![Alt text](https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/3b13fcc6-918c-4d8a-a489-b7d10832be1c)
   
