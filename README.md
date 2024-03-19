@@ -2,7 +2,8 @@
 
 <p id="description">The aim of application was to use .NET MAUI software technology to create an application running on multiple operating systems and based on a single source code. The application is designed to help organise group travel associated with conferences business trips and holidays. The basic assumption was to create an application running on the three most popular operating systems i.e. Windows iOS Android. The application works by presenting data using the graphical controls of the .NET MAUI software retrieving data from a server using HTTP and WebSocket communication and saving the data to a database with an appropriate relational table model. It is therefore a complete software system designed to support organisers in planning and implementing group trips from any available device.</p>
 
-<h2>Project Screenshots:</h2>
+<h2>Project Screenshots:![zdj18](https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/17722832-aad6-4be0-a360-1d26e1784773)
+</h2>
 
 <img src="https://github.com/rafalsulowski/TripPlannerApp/tree/main/TripPlanner/TripPlanner/rysunki/zdj15.png" alt="project-screenshot" width="400" height="400/">
 
