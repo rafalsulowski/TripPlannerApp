@@ -4,9 +4,12 @@
 
 <h2>Project Screenshots:</h2>
 
-![Alt text](https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/3b13fcc6-918c-4d8a-a489-b7d10832be1c)
-
+Login view (Windows):
 ![Alt text](https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/ddd69c5b-e1b7-494f-a17d-77c711c6a908)
+
+Main page view, after sign in (Android)
+![Alt text](https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/bd77d00b-1813-4d6c-a17b-0862338272e1)
+
 
 ![Alt text]()
 
