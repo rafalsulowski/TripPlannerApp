@@ -4,14 +4,12 @@
 
 <h2>Project Screenshots:</h2>
 
-Login view (Windows):
-</br>
-<img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/ddd69c5b-e1b7-494f-a17d-77c711c6a908" width="400" height="400">
+Login view (Windows): </br>
+<img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/ddd69c5b-e1b7-494f-a17d-77c711c6a908" width="480" height="290">
 
 
-Main page view, after sign in (Android)
-</br>
-<img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/bd77d00b-1813-4d6c-a17b-0862338272e1" width="350" height="400">
+Main page view, after sign in (Android) </br>
+<img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/bd77d00b-1813-4d6c-a17b-0862338272e1" width="360" height="780">
 
 
 ![Alt text]()
