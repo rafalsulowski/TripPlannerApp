@@ -4,7 +4,7 @@
 
 <h2>Project Screenshots:</h2>
 
-<img src="" alt="project-screenshot" width="400" height="400/">
+<img src="https://github.com/rafalsulowski/TripPlannerApp/tree/main/TripPlanner/TripPlanner/rysunki/zdj15.png" alt="project-screenshot" width="400" height="400/">
 
   
   
