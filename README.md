@@ -10,7 +10,7 @@ Login view (Windows):
 Main page view, after sign in (Android)
 ![Alt text](https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/bd77d00b-1813-4d6c-a17b-0862338272e1)
 
-
+<img src="https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/bd77d00b-1813-4d6c-a17b-0862338272e1" width="350" title="hover text">
 ![Alt text]()
 
 ![Alt text]()
