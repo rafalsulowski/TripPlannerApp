@@ -4,9 +4,24 @@
 
 <h2>Project Screenshots:</h2>
 
-![Alt text]("https://github.com/rafalsulowski/TripPlannerApp/tree/main/TripPlanner/TripPlanner/rysunki/zdj15.png")
-
 ![Alt text](https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/3b13fcc6-918c-4d8a-a489-b7d10832be1c)
+
+![Alt text](https://github.com/rafalsulowski/TripPlannerApp/assets/48453164/ddd69c5b-e1b7-494f-a17d-77c711c6a908)
+
+![Alt text]()
+
+![Alt text]()
+
+![Alt text]()
+
+![Alt text]()
+
+![Alt text]()
+
+
+![Alt text]()
+
+![Alt text]()
   
 <h2>🧐 Features</h2>
 
